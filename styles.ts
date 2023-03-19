@@ -77,6 +77,40 @@ export const colorModeStyles = {
       color: colors.white,
     },
   },
+  'no-preference': {
+    container: {
+      backgroundColor: colors.black,
+    },
+    headerText: {
+      color: colors.white,
+    },
+    icon: {
+      color: colors.white,
+    },
+    input: {
+      backgroundColor: colors.darkGray,
+      color: colors.white,
+    },
+    placeholder: {
+      color: colors.gray,
+    },
+    importance: {
+      backgroundColor: colors.darkGray,
+      color: colors.white,
+    },
+    importancePickerItem: {
+      color: colors.white,
+    },
+    note: {
+      backgroundColor: colors.darkGray,
+    },
+    noteText: {
+      color: colors.white,
+    },
+    noteImportance: {
+      color: colors.white,
+    },
+  }
 };
 
 export const styles = StyleSheet.create({
@@ -144,5 +178,17 @@ export const styles = StyleSheet.create({
     noteImportance: {
       marginRight: 8,
     },
+    addButtonText: {
+      color: 'white',
+      fontSize: 18,
+    },
+    deleteButton: {
+      color: '#FF0000',
+      fontSize: 16,
+    },
+    slider: {
+      flex: 1,
+      marginRight: 10,
+    }
   });
   

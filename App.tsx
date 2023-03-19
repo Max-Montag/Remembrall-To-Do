@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { rgba } from 'polished';
 import { Appearance, useColorScheme } from 'react-native-appearance';
 import { SafeAreaView, StatusBar, View, TouchableOpacity, TextInput, FlatList, Text, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,7 +20,6 @@ const App = () => {
   const [importance, setImportance] = useState(5);
   const [showImportancePicker, setShowImportancePicker] = useState(false);
   const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme() || 'light');
-
 
   const toggleColorScheme = () => {
     setColorScheme(colorScheme === 'light' ? 'dark' : 'light');
@@ -75,7 +75,7 @@ const App = () => {
         <Text style={colorModeStyles[colorScheme].noteText}>{item.text}</Text>
         <Text style={colorModeStyles[colorScheme].noteImportance}>{item.importance}</Text>
         <TouchableOpacity onPress={() => deleteNote(item.id)}>
-          <Icon name="trash-outline" size={24} color={colorModeStyles[colorScheme].icon} />
+        <Icon name="trash-outline" size={24} color={rgba(colorModeStyles[colorScheme].icon.color, 1)} />
         </TouchableOpacity>
       </View>
     );
@@ -89,14 +89,14 @@ const App = () => {
       <View style={styles.header}>
         <Text style={colorSchemeStyles.headerText}>Notizen</Text>
         <TouchableOpacity onPress={toggleColorScheme}>
-          <Icon name={colorScheme === 'dark' ? 'sunny-outline' : 'moon-outline'} size={24} color={colorSchemeStyles.icon} />
+        <Icon name={colorScheme === 'dark' ? 'sunny-outline' : 'moon-outline'} size={24} color={rgba(colorSchemeStyles.icon.color, 1)} />
         </TouchableOpacity>
       </View>
       <View style={styles.inputContainer}>
         <TextInput
           style={colorSchemeStyles.input}
           placeholder="Notiz hinzufügen"
-          placeholderTextColor={colorSchemeStyles.placeholder}
+          placeholderTextColor={rgba(colorSchemeStyles.placeholder.color, 1)}
           onChangeText={(text) => setInput(text)}
           value={input}
         />
@@ -118,7 +118,7 @@ const App = () => {
           />
         )}
         <TouchableOpacity onPress={addNote} style={styles.addButton}>
-          <Icon name="add" size={24} color={colorSchemeStyles.icon} />
+        <Icon name="add" size={24} color={rgba(colorSchemeStyles.icon.color, 1)} />
         </TouchableOpacity>
       </View>
       <FlatList
