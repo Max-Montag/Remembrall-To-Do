@@ -1,59 +1,135 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, FlatList } from 'react-native';
-import { styles } from './styles';
-import NoteInput from './NoteInput';
-import Note from './Note';
+import { Appearance, useColorScheme } from 'react-native-appearance';
+import { SafeAreaView, StatusBar, View, TouchableOpacity, TextInput, FlatList, Text, Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { styles, colorModeStyles } from './styles';
+import PushNotification from 'react-native-push-notification';
 
-type NoteType = {
-  id: number;
-  content: string;
+Appearance.getColorScheme();
+
+interface Note {
+  id: string;
+  text: string;
   importance: number;
-};
+}
 
-function App(): JSX.Element {
-  const [notes, setNotes] = useState<NoteType[]>([]);
+const App = () => {
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [input, setInput] = useState('');
+  const [importance, setImportance] = useState(5);
+  const [showImportancePicker, setShowImportancePicker] = useState(false);
+  const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme() || 'light');
 
-  const addNote = (content: string) => {
-    const newNote: NoteType = {
-      id: Date.now(),
-      content,
-      importance: 5,
+
+  const toggleColorScheme = () => {
+    setColorScheme(colorScheme === 'light' ? 'dark' : 'light');
+  };
+
+  const addNote = () => {
+    if (input.trim().length === 0) {
+      return;
+    }
+    const newNote = {
+      id: Date.now().toString(),
+      text: input.trim(),
+      importance,
     };
-    setNotes((prevNotes) => [newNote, ...prevNotes]);
+    setNotes([...notes, newNote]);
+    setInput('');
+    setImportance(5);
+    sendNotification(newNote);
   };
 
-  const deleteNote = (id: number) => {
-    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+  const deleteNote = (id: string) => {
+    Alert.alert('Bestätigen', 'Möchten Sie diese Notiz wirklich löschen?', [
+      { text: 'Abbrechen' },
+      { text: 'Löschen', onPress: () => setNotes(notes.filter((note) => note.id !== id)) },
+    ]);
   };
+  
 
-  const updateImportance = (id: number, value: number) => {
-    setNotes((prevNotes) =>
-      prevNotes.map((note) =>
-        note.id === id ? { ...note, importance: value } : note
-      )
+  const sendNotification = (note: Note) => {
+    const intervalMap: { [key: number]: number | null } = {
+      0: null,
+      5: 24 * 60 * 60 * 1000,
+      10: -1,
+    };
+    const interval = intervalMap[note.importance];
+    if (interval === null) {
+      return;
+    }
+    PushNotification.localNotificationSchedule({
+      id: note.id,
+      message: note.text,
+      date: new Date(Date.now() + (interval === -1 ? 60 * 1000 : interval)),
+      repeatType: interval === -1 ? 'minute' : 'time',
+    });
+  };
+  
+  
+
+  const renderItem = ({ item }: { item: Note }) => {
+
+    return (
+      <View style={colorModeStyles[colorScheme].note}>
+        <Text style={colorModeStyles[colorScheme].noteText}>{item.text}</Text>
+        <Text style={colorModeStyles[colorScheme].noteImportance}>{item.importance}</Text>
+        <TouchableOpacity onPress={() => deleteNote(item.id)}>
+          <Icon name="trash-outline" size={24} color={colorModeStyles[colorScheme].icon} />
+        </TouchableOpacity>
+      </View>
     );
   };
 
+  const colorSchemeStyles = colorModeStyles[colorScheme];
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={colorSchemeStyles.container}>
+            <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
       <View style={styles.header}>
-        <Text style={styles.title}>Awesome Notes</Text>
+        <Text style={colorSchemeStyles.headerText}>Notizen</Text>
+        <TouchableOpacity onPress={toggleColorScheme}>
+          <Icon name={colorScheme === 'dark' ? 'sunny-outline' : 'moon-outline'} size={24} color={colorSchemeStyles.icon} />
+        </TouchableOpacity>
       </View>
-      <NoteInput addNote={addNote} />
-      <FlatList
-        data={notes}
-        renderItem={({ item }) => (
-          <Note
-            note={item}
-            deleteNote={deleteNote}
-            updateImportance={updateImportance}
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={colorSchemeStyles.input}
+          placeholder="Notiz hinzufügen"
+          placeholderTextColor={colorSchemeStyles.placeholder}
+          onChangeText={(text) => setInput(text)}
+          value={input}
+        />
+        <TouchableOpacity onPress={() => setShowImportancePicker(!showImportancePicker)}>
+          <Text style={colorSchemeStyles.importance}>{importance}</Text>
+        </TouchableOpacity>
+        {showImportancePicker && (
+          <FlatList
+            data={Array.from({ length: 11 }, (_, i) => i)}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => { setImportance(item); setShowImportancePicker(false); }}>
+                <Text style={colorSchemeStyles.importancePickerItem}>{item}</Text>
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item) => item.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.importancePicker}
           />
         )}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={styles.notesList}
+        <TouchableOpacity onPress={addNote} style={styles.addButton}>
+          <Icon name="add" size={24} color={colorSchemeStyles.icon} />
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={notes}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.notesContainer}
       />
     </SafeAreaView>
   );
-}
+};
 
 export default App;
+
