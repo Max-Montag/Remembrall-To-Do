@@ -9,7 +9,7 @@ export const lightTheme = {
     color: '#333',
   },
   placeholder: {
-    color: '#aaa
+    color: '#aaa',
   },
   importance: {
     color: '#333',

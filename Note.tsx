@@ -1,34 +1,25 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import Slider from '@react-native-community/slider';
+import { AntDesign } from '@expo/vector-icons';
 import { styles } from './styles';
 
 type NoteProps = {
   note: {
-    id: number;
+    id: string;
     content: string;
     importance: number;
   };
-  deleteNote: (id: number) => void;
-  updateImportance: (id: number, value: number) => void;
+  onDelete: (id: string) => void;
+  colorMode: "light" | "dark";
 };
 
-const Note: React.FC<NoteProps> = ({ note, deleteNote, updateImportance }) => {
+const Note: React.FC<NoteProps> = ({ note, onDelete, colorMode }) => {
   return (
-    <View style={styles.note}>
-      <Text style={styles.noteText}>{note.content}</Text>
-      <Slider
-        style={styles.slider}
-        minimumValue={0}
-        maximumValue={10}
-        step={1}
-        value={note.importance}
-        onValueChange={(value) => updateImportance(note.id, value)}
-        minimumTrackTintColor="#6200EE"
-        maximumTrackTintColor="#ccc"
-      />
-      <TouchableOpacity onPress={() => deleteNote(note.id)}>
-        <Text style={styles.deleteButton}>Delete</Text>
+    <View style={styles[colorMode].note}>
+      <Text style={styles[colorMode].noteText}>{note.content}</Text>
+      <Text style={styles[colorMode].noteImportance}>Importance: {note.importance}</Text>
+      <TouchableOpacity onPress={() => onDelete(note.id)} style={styles[colorMode].deleteButton}>
+        <AntDesign name="delete" size={24} color={styles[colorMode].icon.color} />
       </TouchableOpacity>
     </View>
   );

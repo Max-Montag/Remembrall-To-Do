@@ -3,16 +3,18 @@ import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { styles } from './styles';
 
 type NoteInputProps = {
-  addNote: (content: string) => void;
+  addNote: (content: string, importance: number) => void;
 };
 
 const NoteInput: React.FC<NoteInputProps> = ({ addNote }) => {
   const [inputValue, setInputValue] = useState('');
+  const [importance, setImportance] = useState(5);
 
   const handleAddNote = () => {
     if (inputValue.trim() !== '') {
-      addNote(inputValue);
+      addNote(inputValue, importance);
       setInputValue('');
+      setImportance(5);
     }
   };
 
@@ -23,6 +25,7 @@ const NoteInput: React.FC<NoteInputProps> = ({ addNote }) => {
         onChangeText={setInputValue}
         style={styles.input}
         placeholder="Write a note..."
+        placeholderTextColor={styles.placeholder.color}
       />
       <TouchableOpacity onPress={handleAddNote} style={styles.addButton}>
         <Text style={styles.addButtonText}>Add</Text>
