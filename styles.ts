@@ -1,194 +1,121 @@
 import { StyleSheet } from 'react-native';
 
-export const colors = {
-  white: '#FFFFFF',
-  black: '#000000',
-  gray: '#A9A9A9',
-  lightGray: '#E0E0E0',
-  darkGray: '#696969',
+export const lightTheme = {
+  container: {
+    backgroundColor: '#f1f1f1',
+  },
+  input: {
+    backgroundColor: '#fff',
+    color: '#333',
+  },
+  placeholder: {
+    color: '#aaa
+  },
+  importance: {
+    color: '#333',
+  },
+  picker: {
+    color: '#333',
+  },
+  icon: {
+    color: '#333',
+  },
+  note: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 10,
+  },
+  noteText: {
+    color: '#333',
+  },
+  noteImportance: {
+    color: '#333',
+  },
+  toggleThemeButton: {
+    backgroundColor: '#333',
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+  },
 };
 
-export const colorModeStyles = {
-  light: {
-    container: {
-      backgroundColor: colors.white,
-    },
-    headerText: {
-      color: colors.black,
-    },
-    icon: {
-      color: colors.black,
-    },
-    input: {
-      backgroundColor: colors.lightGray,
-      color: colors.black,
-    },
-    placeholder: {
-      color: colors.gray,
-    },
-    importance: {
-      backgroundColor: colors.lightGray,
-      color: colors.black,
-    },
-    importancePickerItem: {
-      color: colors.black,
-    },
-    note: {
-      backgroundColor: colors.lightGray,
-    },
-    noteText: {
-      color: colors.black,
-    },
-    noteImportance: {
-      color: colors.black,
-    },
+export const darkTheme = {
+  container: {
+    backgroundColor: '#333',
   },
-  dark: {
-    container: {
-      backgroundColor: colors.black,
-    },
-    headerText: {
-      color: colors.white,
-    },
-    icon: {
-      color: colors.white,
-    },
-    input: {
-      backgroundColor: colors.darkGray,
-      color: colors.white,
-    },
-    placeholder: {
-      color: colors.gray,
-    },
-    importance: {
-      backgroundColor: colors.darkGray,
-      color: colors.white,
-    },
-    importancePickerItem: {
-      color: colors.white,
-    },
-    note: {
-      backgroundColor: colors.darkGray,
-    },
-    noteText: {
-      color: colors.white,
-    },
-    noteImportance: {
-      color: colors.white,
-    },
+  input: {
+    backgroundColor: '#666',
+    color: '#fff',
   },
-  'no-preference': {
-    container: {
-      backgroundColor: colors.black,
-    },
-    headerText: {
-      color: colors.white,
-    },
-    icon: {
-      color: colors.white,
-    },
-    input: {
-      backgroundColor: colors.darkGray,
-      color: colors.white,
-    },
-    placeholder: {
-      color: colors.gray,
-    },
-    importance: {
-      backgroundColor: colors.darkGray,
-      color: colors.white,
-    },
-    importancePickerItem: {
-      color: colors.white,
-    },
-    note: {
-      backgroundColor: colors.darkGray,
-    },
-    noteText: {
-      color: colors.white,
-    },
-    noteImportance: {
-      color: colors.white,
-    },
-  }
+  placeholder: {
+    color: '#aaa',
+  },
+  importance: {
+    color: '#fff',
+  },
+  picker: {
+    color: '#fff',
+  },
+  icon: {
+    color: '#fff',
+  },
+  note: {
+    backgroundColor: '#666',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 10,
+  },
+  noteText: {
+    color: '#fff',
+  },
+  noteImportance: {
+    color: '#fff',
+  },
+  toggleThemeButton: {
+    backgroundColor: '#666',
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+  },
 };
 
 export const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingHorizontal: 16,
-      paddingTop: 8,
-    },
-    inputContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingHorizontal: 16,
-      paddingBottom: 8,
-    },
-    input: {
-      flex: 1,
-      marginRight: 8,
-      paddingHorizontal: 16,
-      paddingVertical: 12,
-      borderRadius: 8,
-    },
-    importance: {
-      marginRight: 8,
-      paddingHorizontal: 12,
-      paddingVertical: 8,
-      borderRadius: 8,
-    },
-    importancePicker: {
-      paddingHorizontal: 8,
-    },
-    importancePickerItem: {
-      paddingHorizontal: 12,
-      paddingVertical: 8,
-      borderRadius: 8,
-    },
-    addButton: {
-      marginLeft: 8,
-      paddingHorizontal: 12,
-      paddingVertical: 8,
-      borderRadius: 8,
-    },
-    notesContainer: {
-      paddingHorizontal: 16,
-      paddingTop: 8,
-    },
-    note: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: 16,
-      paddingHorizontal: 16,
-      paddingVertical: 12,
-      borderRadius: 8,
-    },
-    noteText: {
-      flex: 1,
-      marginRight: 8,
-    },
-    noteImportance: {
-      marginRight: 8,
-    },
-    addButtonText: {
-      color: 'white',
-      fontSize: 18,
-    },
-    deleteButton: {
-      color: '#FF0000',
-      fontSize: 16,
-    },
-    slider: {
-      flex: 1,
-      marginRight: 10,
-    }
-  });
-  
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  input: {
+    flex: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+  },
+  addButton: {
+    backgroundColor: '#007BFF',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginLeft: 10,
+  },
+  addButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+});
