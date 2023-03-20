@@ -94,18 +94,26 @@ export const darkTheme = {
 
 export const styles = StyleSheet.create({
   inputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: 'column',
     marginBottom: 20,
   },
-  input: {
+  fullWidthTextInput: {
     flex: 1,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 5,
+    marginHorizontal: 20,
+    marginBottom: 10,
+  },
+  inputOptionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+  },
+  picker: {
+    width: '40%',
   },
   addButton: {
     backgroundColor: '#007BFF',

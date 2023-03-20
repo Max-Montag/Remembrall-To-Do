@@ -20,7 +20,7 @@ type Note = {
 const App = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [input, setInput] = useState('');
-  const [importance, setImportance] = useState(5);
+  const [importance, setImportance] = useState<number>(5);
   const [colorMode, setColorMode] = useState<'light' | 'dark'>('light');
   const theme = colorMode === 'light' ? lightTheme : darkTheme;
 
@@ -48,30 +48,32 @@ const App = () => {
 
   return (
     <View style={theme.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          value={input}
-          onChangeText={(text) => setInput(text)}
-          style={theme.input}
-          placeholder="Notiz hinzufügen..."
-          placeholderTextColor={theme.placeholder.color}
-        />
-        <Picker
-          selectedValue={importance}
-          style={theme.picker}
-          onValueChange={(itemValue) => setImportance(itemValue)}
-        >
-          <Picker.Item label="1" value={1} />
-          <Picker.Item label="2" value={2} />
-          <Picker.Item label="3" value={3} />
-          <Picker.Item label="4" value={4} />
-          <Picker.Item label="5" value={5} />
-        </Picker>
-        <TouchableOpacity onPress={addNote} style={styles.addButton}>
-          <Text style={styles.addButtonText}>Hinzufügen</Text>
-        </TouchableOpacity>
-      </View>
       <ScrollView>
+        <View style={styles.inputContainer}>
+          <TextInput
+            value={input}
+            onChangeText={(text) => setInput(text)}
+            style={[theme.input, styles.fullWidthTextInput]}
+            placeholder="Notiz hinzufügen..."
+            placeholderTextColor={theme.placeholder.color}
+          />
+          <View style={styles.inputOptionsContainer}>
+            <Picker
+              selectedValue={importance}
+              style={[theme.picker, styles.picker]}
+              onValueChange={(itemValue, itemIndex) => setImportance(Number(itemValue))}
+            >
+              <Picker.Item label="1" value={1} />
+              <Picker.Item label="2" value={2} />
+              <Picker.Item label="3" value={3} />
+              <Picker.Item label="4" value={4} />
+              <Picker.Item label="5" value={5} />
+            </Picker>
+            <TouchableOpacity onPress={addNote} style={styles.addButton}>
+              <Text style={styles.addButtonText}>Hinzufügen</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         {notes.map((note) => (
           <View key={note.id} style={theme.note}>
             <Text style={theme.noteText}>{note.content}</Text>
