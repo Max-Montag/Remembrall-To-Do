@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert, TextInput } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { lightTheme, darkTheme, styles, iconsContainer } from "./styles";
+import { lightTheme, darkTheme, styles, iconsContainer, noteContentContainer } from "./styles";
 
 
 type NoteProps = {
@@ -43,39 +43,33 @@ const Note: React.FC<NoteProps> = ({ note, onDelete, onUpdate, colorMode }) => {
 
   return (
     <View style={theme.note}>
-      {isEditing ? (
-        <>
-          <TextInput
-            style={theme.input}
-            value={newContent}
-            onChangeText={handleChangeText}
-          />
-          <TouchableOpacity onPress={handleSave}>
-            <MaterialIcons name="save" size={24} color={theme.icon.color} />
+      <View style={noteContentContainer}>
+        {isEditing ? (
+          <>
+            <TextInput
+              style={theme.noteInput}
+              value={newContent}
+              onChangeText={handleChangeText}
+            />
+          </>
+        ) : (
+          <>
+            <Text style={theme.noteText}>{note.content}</Text>
+            <Text style={theme.noteImportance}>
+              Wichtigkeit: {note.importance}
+            </Text>
+          </>
+        )}
+      </View>
+      {!isEditing && (
+        <View style={[theme.iconsContainer, iconsContainer]}>
+          <TouchableOpacity onPress={handleEdit}>
+            <MaterialIcons name="edit" size={24} color={theme.icon.color} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleCancel}>
-            <MaterialIcons name="cancel" size={24} color={theme.icon.color} />
+          <TouchableOpacity onPress={() => onDelete(note.id)}>
+            <MaterialIcons name="delete" size={24} color={theme.icon.color} />
           </TouchableOpacity>
-        </>
-      ) : (
-        <>
-          <Text style={theme.noteText}>{note.content}</Text>
-          <Text style={theme.noteImportance}>
-            Wichtigkeit: {note.importance}
-          </Text>
-          <View style={iconsContainer}>
-            <TouchableOpacity onPress={handleEdit}>
-              <MaterialIcons name="edit" size={24} color={theme.icon.color} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => onDelete(note.id)}>
-              <MaterialIcons
-                name="delete"
-                size={24}
-                color={theme.icon.color}
-              />
-            </TouchableOpacity>
-          </View>
-        </>
+        </View>
       )}
     </View>
   );

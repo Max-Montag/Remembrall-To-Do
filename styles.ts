@@ -18,13 +18,17 @@ export const lightTheme = {
     color: '#333',
   },
   icon: {
-    color: '#333',
+    color: '#000',
+  },
+  iconsContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.1)', // Für das helle Thema eine leichte Hintergrundfarbe hinzufügen
   },
   note: {
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
+    flexDirection: "row",
   },
   noteText: {
     color: '#333',
@@ -69,11 +73,15 @@ export const darkTheme = {
   icon: {
     color: '#fff',
   },
+  iconsContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)', // Für das dunkle Thema eine leichte Hintergrundfarbe hinzufügen
+  },
   note: {
     backgroundColor: '#666',
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
+    flexDirection: "row",
   },
   noteText: {
     color: '#fff',
@@ -158,8 +166,13 @@ export const themeToggleStyle = {
   right: 20,
 };
 
+export const noteContentContainer = {
+  flex: 1,
+};
+
 export const iconsContainer = {
   flexDirection: "row",
-  justifyContent: "space-between",
+  justifyContent: "flex-end",
+  alignItems: "center",
   width: 60,
 };
