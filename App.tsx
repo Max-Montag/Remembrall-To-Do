@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { rgba } from 'polished';
-import { Appearance, useColorScheme } from 'react-native-appearance';
+import { useColorScheme } from 'react-native';
 import { SafeAreaView, StatusBar, View, TouchableOpacity, TextInput, FlatList, Text, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { styles, colorModeStyles } from './styles';
 import PushNotification from 'react-native-push-notification';
-
-Appearance.getColorScheme();
 
 interface Note {
   id: string;
@@ -19,12 +17,8 @@ const App = () => {
   const [input, setInput] = useState('');
   const [importance, setImportance] = useState(5);
   const [showImportancePicker, setShowImportancePicker] = useState(false);
-  const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme() || 'light');
-
-  const toggleColorScheme = () => {
-    setColorScheme(colorScheme === 'light' ? 'dark' : 'light');
-  };
-
+  const colorScheme = useColorScheme() || 'light';
+  
   const addNote = () => {
     if (input.trim().length === 0) {
       return;
@@ -65,8 +59,6 @@ const App = () => {
       repeatType: interval === -1 ? 'minute' : 'time',
     });
   };
-  
-  
 
   const renderItem = ({ item }: { item: Note }) => {
 
@@ -88,9 +80,6 @@ const App = () => {
             <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
       <View style={styles.header}>
         <Text style={colorSchemeStyles.headerText}>Notizen</Text>
-        <TouchableOpacity onPress={toggleColorScheme}>
-        <Icon name={colorScheme === 'dark' ? 'sunny-outline' : 'moon-outline'} size={24} color={rgba(colorSchemeStyles.icon.color, 1)} />
-        </TouchableOpacity>
       </View>
       <View style={styles.inputContainer}>
         <TextInput
