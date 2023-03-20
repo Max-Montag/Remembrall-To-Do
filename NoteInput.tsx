@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text } from 'react-native';
-import { styles } from './styles';
+import { lightTheme, darkTheme, styles } from './styles';
 
 type NoteInputProps = {
   addNote: (content: string, importance: number) => void;
@@ -25,7 +25,7 @@ const NoteInput: React.FC<NoteInputProps> = ({ addNote }) => {
         onChangeText={setInputValue}
         style={styles.input}
         placeholder="Write a note..."
-        placeholderTextColor={styles.placeholder.color}
+        placeholderTextColor={lightTheme.placeholder.color}
       />
       <TouchableOpacity onPress={handleAddNote} style={styles.addButton}>
         <Text style={styles.addButtonText}>Add</Text>

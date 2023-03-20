@@ -43,7 +43,7 @@ export const lightTheme = {
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 5,
-  },
+  }
 };
 
 export const darkTheme = {
