@@ -8,8 +8,9 @@ import {
   ScrollView,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Picker } from '@react-native-picker/picker';
-import { styles, lightTheme, darkTheme } from './styles';
+import NoteInput from './NoteInput';
+import Note from './Note';
+import { styles, lightTheme, darkTheme, themeToggleStyle } from './styles';
 
 type Note = {
   id: number;
@@ -38,6 +39,12 @@ const App = () => {
     }
   };
 
+  const updateNote = (id: string, content: string) => {
+    setNotes((prevNotes) =>
+      prevNotes.map((note) => (note.id === id ? { ...note, content } : note))
+    );
+  };
+
   const deleteNote = (id: number) => {
     setNotes(notes.filter((note) => note.id !== id));
   };
@@ -48,43 +55,33 @@ const App = () => {
 
   return (
     <View style={theme.container}>
-      <ScrollView>
-        <View style={styles.inputContainer}>
-          <TextInput
-            value={input}
-            onChangeText={(text) => setInput(text)}
-            style={[theme.input, styles.fullWidthTextInput]}
-            placeholder="Notiz hinzufügen..."
-            placeholderTextColor={theme.placeholder.color}
-          />
-          <View style={styles.inputOptionsContainer}>
-            <Picker
-              selectedValue={importance}
-              style={[theme.picker, styles.picker]}
-              onValueChange={(itemValue, itemIndex) => setImportance(Number(itemValue))}
-            >
-              <Picker.Item label="1" value={1} />
-              <Picker.Item label="2" value={2} />
-              <Picker.Item label="3" value={3} />
-              <Picker.Item label="4" value={4} />
-              <Picker.Item label="5" value={5} />
-            </Picker>
-            <TouchableOpacity onPress={addNote} style={styles.addButton}>
-              <Text style={styles.addButtonText}>Hinzufügen</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+      <ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
+        <NoteInput
+          addNote={addNote}
+          input={input}
+          setInput={setInput}
+          importance={importance}
+          setImportance={setImportance}
+          colorMode={colorMode}
+        />
+  
         {notes.map((note) => (
-          <View key={note.id} style={theme.note}>
-            <Text style={theme.noteText}>{note.content}</Text>
-            <Text style={theme.noteImportance}>Wichtigkeit: {note.importance}</Text>
-            <TouchableOpacity onPress={() => deleteNote(note.id)}>
-              <MaterialIcons name="delete" size={24} color={theme.icon.color} />
-            </TouchableOpacity>
-          </View>
+          <Note
+            key={note.id}
+            note={note}
+            onDelete={deleteNote}
+            onUpdate={updateNote}
+            colorMode={colorMode}
+          />
         ))}
       </ScrollView>
-      <TouchableOpacity onPress={toggleTheme} style={theme.toggleThemeButton as ViewStyle}>
+      <TouchableOpacity
+        onPress={toggleTheme}
+        style={[
+          theme.toggleThemeButton as ViewStyle,
+          themeToggleStyle,
+        ]}
+      >
         <MaterialIcons
           name={colorMode === 'light' ? 'brightness-3' : 'brightness-7'}
           size={24}
@@ -93,6 +90,7 @@ const App = () => {
       </TouchableOpacity>
     </View>
   );
+  
 };
 
 export default App;

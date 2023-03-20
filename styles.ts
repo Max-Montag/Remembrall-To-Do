@@ -43,7 +43,10 @@ export const lightTheme = {
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 5,
-  }
+  },
+  addButton: {
+    backgroundColor: '#007BFF',
+  },
 };
 
 export const darkTheme = {
@@ -90,12 +93,16 @@ export const darkTheme = {
     alignItems: 'center',
     elevation: 5,
   },
+  addButton: {
+    backgroundColor: '#007BFF',
+  },
 };
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create({  
   inputContainer: {
     flexDirection: 'column',
     marginBottom: 20,
+    marginTop: 20,
   },
   fullWidthTextInput: {
     flex: 1,
@@ -122,8 +129,31 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     marginLeft: 10,
   },
+  editButton: {
+    marginRight: 10,
+  },
+  deleteButton: {
+    marginRight: 10,
+  },
   addButtonText: {
     color: '#fff',
     fontWeight: 'bold',
   },
+  toggleThemeButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+  },
 });
+
+export const themeToggleStyle = {
+  position: 'absolute',
+  bottom: 20,
+  right: 20,
+};
