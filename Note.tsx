@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Alert, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, Alert, TextInput, ViewStyle } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { lightTheme, darkTheme, styles, iconsContainer, noteContentContainer } from "./styles";
+import { lightTheme, darkTheme, iconsContainer, noteContentContainer, note_, noteInput } from "./styles";
 
 
 type NoteProps = {
@@ -42,12 +42,12 @@ const Note: React.FC<NoteProps> = ({ note, onDelete, onUpdate, colorMode }) => {
   };
 
   return (
-    <View style={theme.note}>
+    <View style={note_}>
       <View style={noteContentContainer}>
         {isEditing ? (
           <>
             <TextInput
-              style={theme.noteInput}
+              style={noteInput}
               value={newContent}
               onChangeText={handleChangeText}
             />

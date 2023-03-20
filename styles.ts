@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 export const lightTheme = {
   container: {
@@ -21,7 +21,7 @@ export const lightTheme = {
     color: '#000',
   },
   iconsContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)', // Für das helle Thema eine leichte Hintergrundfarbe hinzufügen
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
   note: {
     backgroundColor: '#fff',
@@ -74,7 +74,7 @@ export const darkTheme = {
     color: '#fff',
   },
   iconsContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)', // Für das dunkle Thema eine leichte Hintergrundfarbe hinzufügen
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   note: {
     backgroundColor: '#666',
@@ -160,19 +160,36 @@ export const styles = StyleSheet.create({
   },
 });
 
-export const themeToggleStyle = {
-  position: 'absolute',
-  bottom: 20,
-  right: 20,
+export const themeToggleStyle: ViewStyle = {
+  position: "absolute",
+  bottom: 30,
+  right: 30,
 };
 
 export const noteContentContainer = {
   flex: 1,
 };
 
-export const iconsContainer = {
+export const iconsContainer: ViewStyle = {
   flexDirection: "row",
-  justifyContent: "flex-end",
+  justifyContent: "space-between",
   alignItems: "center",
   width: 60,
+};
+
+export const note_: ViewStyle = {
+  backgroundColor: "#fff",
+  borderRadius: 10,
+  padding: 15,
+  marginBottom: 10,
+  flexDirection: "row",
+};
+
+export const noteInput: TextStyle = {
+  backgroundColor: "#eee",
+  color: "#333",
+  borderBottomColor: "#bbb",
+  borderBottomWidth: 1,
+  flexGrow: 1,
+  padding: 5,
 };

@@ -10,7 +10,7 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import NoteInput from './NoteInput';
 import Note from './Note';
-import { styles, lightTheme, darkTheme, themeToggleStyle } from './styles';
+import { lightTheme, darkTheme, themeToggleStyle } from './styles';
 
 type Note = {
   id: number;
@@ -39,11 +39,11 @@ const App = () => {
     }
   };
 
-  const updateNote = (id: string, content: string) => {
+  const updateNote = (id: number, content: string) => {
     setNotes((prevNotes) =>
       prevNotes.map((note) => (note.id === id ? { ...note, content } : note))
     );
-  };
+  };  
 
   const deleteNote = (id: number) => {
     setNotes(notes.filter((note) => note.id !== id));
