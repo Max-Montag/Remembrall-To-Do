@@ -157,3 +157,9 @@ export const themeToggleStyle = {
   bottom: 20,
   right: 20,
 };
+
+export const iconsContainer = {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  width: 60,
+};
