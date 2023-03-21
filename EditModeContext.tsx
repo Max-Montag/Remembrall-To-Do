@@ -1,11 +1,11 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
-interface EditModeContextProps {
-  isEditing: boolean;
-  setIsEditing: (value: boolean) => void;
-}
+type EditModeContextType = {
+  editingNoteId: number | null;
+  setEditingNoteId: (id: number | null) => void;
+};
 
-export const EditModeContext = createContext<EditModeContextProps>({
-  isEditing: false,
-  setIsEditing: () => {},
+export const EditModeContext = createContext<EditModeContextType>({
+  editingNoteId: null,
+  setEditingNoteId: () => {},
 });

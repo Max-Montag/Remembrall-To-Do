@@ -23,6 +23,7 @@ const App = () => {
   const [importance, setImportance] = useState<number>(5);
   const [colorMode, setColorMode] = useState<'light' | 'dark'>('light');
   const [isEditing, setIsEditing] = useState(false);
+  const [editingNoteId, setEditingNoteId] = useState<number | null>(null);
   const theme = colorMode === 'light' ? lightTheme : darkTheme;
 
   const addNote = () => {
@@ -54,7 +55,7 @@ const App = () => {
   };
 
   return (
-    <EditModeContext.Provider value={{ isEditing, setIsEditing }}>
+    <EditModeContext.Provider value={{ editingNoteId, setEditingNoteId }}>
       <TouchableWithoutFeedback onPress={() => setIsEditing(false)}>
         <View style={theme.container}>
           <ScrollView contentContainerStyle={{ paddingBottom: 70 }}>

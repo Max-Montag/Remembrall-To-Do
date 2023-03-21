@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TouchableOpacity, TextInput,TouchableWithoutFeedback } from "react-native";
 import { lightTheme, darkTheme, noteContentContainer, note_, noteInput, deleteButton, deleteButtonContainer, deleteButtonText } from "./styles";
+import { EditModeContext } from "./EditModeContext";
 
 type NoteProps = {
   note: {
@@ -16,22 +17,25 @@ type NoteProps = {
 const Note: React.FC<NoteProps> = ({ note, onDelete, onUpdate, colorMode }) => {
   const theme = colorMode === "light" ? lightTheme : darkTheme;
   const [newContent, setNewContent] = useState(note.content);
-  const [isEditing, setIsEditing] = useState(false);
+  const { editingNoteId, setEditingNoteId } = useContext(EditModeContext);
+  const isEditing = editingNoteId === note.id;
 
 
   const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleChangeText = (text: string) => {
-    setNewContent(text);
+    if (!isEditing) {
+      setEditingNoteId(note.id);
+    }
   };
 
   const handleSave = () => {
     if (isEditing) {
       onUpdate(note.id, newContent);
-      setIsEditing(false);
+      setEditingNoteId(null);
     }
+  };
+
+  const handleChangeText = (text: string) => {
+    setNewContent(text);
   };
 
   return (
