@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { ViewStyle,TouchableWithoutFeedback } from 'react-native';
 import {
   View,
-  Text,
-  TextInput,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
@@ -42,13 +40,13 @@ const App = () => {
   };
 
   const updateNote = (id: number, content: string) => {
-    /*setNotes((prevNotes) =>
+    setNotes((prevNotes) =>
       prevNotes.map((note) => (note.id === id ? { ...note, content } : note))
-    );*/
-  };  
-
+    );
+  };
+  
   const deleteNote = (id: number) => {
-    //setNotes(notes.filter((note) => note.id !== id));
+    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
   };
 
   const toggleTheme = () => {
@@ -68,7 +66,6 @@ const App = () => {
               setImportance={setImportance}
               colorMode={colorMode}
             />
-      
             {notes.map((note) => (
               <Note
                 key={note.id}

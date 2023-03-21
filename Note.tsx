@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Alert, TextInput, ViewStyle, TouchableWithoutFeedback } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { lightTheme, darkTheme, iconsContainer, noteContentContainer, note_, noteInput, deleteButton, deleteButtonContainer, deleteButtonText } from "./styles";
-import { useContext } from 'react';
-import { EditModeContext } from './EditModeContext';
+import { View, Text, TouchableOpacity, TextInput,TouchableWithoutFeedback } from "react-native";
+import { lightTheme, darkTheme, noteContentContainer, note_, noteInput, deleteButton, deleteButtonContainer, deleteButtonText } from "./styles";
 
 type NoteProps = {
   note: {
@@ -19,7 +16,8 @@ type NoteProps = {
 const Note: React.FC<NoteProps> = ({ note, onDelete, onUpdate, colorMode }) => {
   const theme = colorMode === "light" ? lightTheme : darkTheme;
   const [newContent, setNewContent] = useState(note.content);
-  const { isEditing, setIsEditing } = useContext(EditModeContext);
+  const [isEditing, setIsEditing] = useState(false);
+
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -30,21 +28,14 @@ const Note: React.FC<NoteProps> = ({ note, onDelete, onUpdate, colorMode }) => {
   };
 
   const handleSave = () => {
-    if (newContent.trim() !== "") {
+    if (isEditing) {
       onUpdate(note.id, newContent);
       setIsEditing(false);
-    } else {
-      Alert.alert("Fehler", "Der Inhalt darf nicht leer sein.");
     }
   };
 
-  const handleCancel = () => {
-    setNewContent(note.content);
-    setIsEditing(false);
-  };
-
   return (
-    <TouchableWithoutFeedback onPress={handleCancel}>
+    <TouchableWithoutFeedback onPress={handleSave}>
       <View style={note_}>
         <TouchableOpacity onPress={handleEdit} activeOpacity={1}>
           <View style={noteContentContainer}>
@@ -54,6 +45,7 @@ const Note: React.FC<NoteProps> = ({ note, onDelete, onUpdate, colorMode }) => {
                   style={[noteInput, theme.noteInputBackground]}
                   value={newContent}
                   onChangeText={handleChangeText}
+                  onBlur={handleSave} // Add this line
                 />
               </>
             ) : (
@@ -75,7 +67,7 @@ const Note: React.FC<NoteProps> = ({ note, onDelete, onUpdate, colorMode }) => {
         )}
       </View>
     </TouchableWithoutFeedback>
-  );  
+  );
 };
 
 export default Note;

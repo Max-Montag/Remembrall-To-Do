@@ -1,5 +1,4 @@
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 export const lightTheme = {
   container: {

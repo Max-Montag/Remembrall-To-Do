@@ -31,7 +31,7 @@ const NoteInput: React.FC<NoteInputProps> = ({
         style={[theme.input, styles.fullWidthTextInput]}
         placeholder="Notiz hinzufügen..."
         placeholderTextColor={theme.placeholder.color}
-        multiline // hinzugefügt, um mehrere Zeilen zu ermöglichen
+        multiline
       />
       <View style={styles.inputOptionsContainer}>
         <Picker
