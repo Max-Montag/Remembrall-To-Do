@@ -49,7 +49,7 @@ const Note: React.FC<NoteProps> = ({ note, onDelete, onUpdate, colorMode }) => {
                   style={[noteInput, theme.noteInputBackground]}
                   value={newContent}
                   onChangeText={handleChangeText}
-                  onBlur={handleSave} // Add this line
+                  onBlur={handleSave}
                 />
               </>
             ) : (

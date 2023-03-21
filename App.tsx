@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ViewStyle,TouchableWithoutFeedback } from 'react-native';
 import {
   View,
@@ -10,6 +10,7 @@ import NoteInput from './NoteInput';
 import Note from './Note';
 import { lightTheme, darkTheme, themeToggleStyle } from './styles';
 import { EditModeContext } from './EditModeContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Note = {
   id: number;
@@ -26,6 +27,29 @@ const App = () => {
   const [editingNoteId, setEditingNoteId] = useState<number | null>(null);
   const theme = colorMode === 'light' ? lightTheme : darkTheme;
 
+  useEffect(() => {
+    loadNotes();
+  }, []);  
+
+  const loadNotes = async () => {
+    try {
+      const storedNotes = await AsyncStorage.getItem('notes');
+      if (storedNotes !== null) {
+        setNotes(JSON.parse(storedNotes));
+      }
+    } catch (error) {
+      console.error('Error loading notes:', error);
+    }
+  };
+  
+  const saveNotes = async (notesToSave: Note[]) => {
+    try {
+      await AsyncStorage.setItem('notes', JSON.stringify(notesToSave));
+    } catch (error) {
+      console.error('Error saving notes:', error);
+    }
+  };  
+
   const addNote = () => {
     if (input.trim() !== '') {
       const newNote: Note = {
@@ -33,22 +57,28 @@ const App = () => {
         content: input,
         importance: importance,
       };
-
-      setNotes([...notes, newNote]);
+  
+      const updatedNotes = [...notes, newNote];
+      setNotes(updatedNotes);
+      saveNotes(updatedNotes);
       setInput('');
       setImportance(5);
     }
   };
-
+  
   const updateNote = (id: number, content: string) => {
-    setNotes((prevNotes) =>
-      prevNotes.map((note) => (note.id === id ? { ...note, content } : note))
+    const updatedNotes = notes.map((note) =>
+      note.id === id ? { ...note, content } : note
     );
+    setNotes(updatedNotes);
+    saveNotes(updatedNotes);
   };
   
   const deleteNote = (id: number) => {
-    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
-  };
+    const updatedNotes = notes.filter((note) => note.id !== id);
+    setNotes(updatedNotes);
+    saveNotes(updatedNotes);
+  };  
 
   const toggleTheme = () => {
     setColorMode(colorMode === 'light' ? 'dark' : 'light');
