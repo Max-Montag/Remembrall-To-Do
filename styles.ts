@@ -1,7 +1,7 @@
-import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import {StyleSheet, ViewStyle, TextStyle} from 'react-native'
 
-export const lmc = ['#C51427', '#F75F00', '#F3CE3A', '#75F99A', '#D4FBDF'];
-export const dmc = ['#630A14', '#AD4300', '#DBB005', '#46955C', '#AAC9B2'];
+export const lmc = ['#C51427', '#F75F00', '#F3CE3A', '#75F99A', '#D4FBDF']
+export const dmc = ['#630A14', '#AD4300', '#DBB005', '#46955C', '#AAC9B2']
 
 export const lightTheme = {
   container: {
@@ -28,17 +28,17 @@ export const lightTheme = {
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
   addButton: {
-    backgroundColor: '#333'
+    backgroundColor: '#333',
   },
   deleteButton: {
-    backgroundColor: "#ccc",
+    backgroundColor: '#ccc',
   },
   note: {
     backgroundColor: '#333',
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   noteText: {
     color: '#000',
@@ -62,7 +62,7 @@ export const lightTheme = {
     elevation: 5,
     alignSelf: 'flex-end',
   },
-};
+}
 
 export const darkTheme = {
   container: {
@@ -93,14 +93,14 @@ export const darkTheme = {
     color: '#999',
   },
   deleteButton: {
-    backgroundColor: "#444",
+    backgroundColor: '#444',
   },
   note: {
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   noteText: {
     color: '#fff',
@@ -124,9 +124,9 @@ export const darkTheme = {
     elevation: 5,
     alignSelf: 'flex-end',
   },
-};
+}
 
-export const styles = StyleSheet.create({  
+export const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'column',
     marginBottom: 20,
@@ -147,7 +147,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  }, 
+  },
   fullWidthTextInput: {
     flex: 1,
     paddingHorizontal: 10,
@@ -171,7 +171,7 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   noteText: {
     color: '#000',
@@ -181,7 +181,7 @@ export const styles = StyleSheet.create({
   },
   noteTextContainer: {
     marginRight: 30,
-  },  
+  },
   noteImportance: {
     color: '#000',
   },
@@ -196,64 +196,63 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 5,
   },
-});
+})
 
 export const themeToggleStyle: ViewStyle = {
-  position: "absolute",
+  position: 'absolute',
   bottom: 30,
   right: 30,
-};
+}
 
 export const noteContentContainer = {
   flex: 1,
-};
+}
 
 export const iconsContainer: ViewStyle = {
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
   width: 60,
-};
+}
 
 export const note_: ViewStyle = {
   borderColor: '#000',
-  borderWidth: 1,
+  borderWidth: 0,
   borderRadius: 10,
   padding: 15,
   margin: 5,
   marginTop: 0,
-  flexDirection: "row",
-  alignItems: "stretch",
-};
+  flexDirection: 'row',
+  alignItems: 'stretch',
+}
 
 export const noteInput: TextStyle = {
-  backgroundColor: "#eee",
-  color: "#333",
-  borderBottomColor: "#bbb",
+  backgroundColor: '#eee',
+  color: '#333',
+  borderBottomColor: '#bbb',
   borderBottomWidth: 1,
   flexGrow: 1,
   padding: 5,
-};
+}
 
 export const deleteButtonContainer: ViewStyle = {
-  justifyContent: "center",
-  marginLeft: "auto",
-};
+  justifyContent: 'center',
+  marginLeft: 'auto',
+}
 
 export const deleteButton: ViewStyle = {
   borderRadius: 15,
   width: 20,
   height: 20,
-  justifyContent: "center",
-  alignItems: "center",
+  justifyContent: 'center',
+  alignItems: 'center',
   borderColor: '#666',
   borderWidth: 1,
-};
+}
 
 export const deleteButtonText: TextStyle = {
-  color: "#888",
-  fontWeight: "200",
+  color: '#888',
+  fontWeight: '200',
   fontSize: 15,
   lineHeight: 15,
-};
-
+}
