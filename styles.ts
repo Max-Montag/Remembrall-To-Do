@@ -49,18 +49,8 @@ export const lightTheme = {
   noteImportance: {
     color: '#999',
   },
-  toggleThemeButton: {
+  addNoteButton: {
     backgroundColor: '#333',
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 5,
-    alignSelf: 'flex-end',
   },
 }
 
@@ -111,18 +101,8 @@ export const darkTheme = {
   noteImportance: {
     color: '#999',
   },
-  toggleThemeButton: {
+  addNoteButton: {
     backgroundColor: '#666',
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 5,
-    alignSelf: 'flex-end',
   },
 }
 
@@ -168,10 +148,14 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   note: {
+    borderColor: '#000',
+    borderWidth: 0,
     borderRadius: 10,
     padding: 15,
-    marginBottom: 10,
+    margin: 5,
+    marginTop: 0,
     flexDirection: 'row',
+    alignItems: 'stretch',
   },
   noteText: {
     color: '#000',
@@ -179,80 +163,83 @@ export const styles = StyleSheet.create({
   noteTextInput: {
     marginRight: 30,
   },
+  noteInput: {
+    backgroundColor: '#eee',
+    color: '#333',
+    borderBottomColor: '#bbb',
+    borderBottomWidth: 1,
+    flexGrow: 1,
+    padding: 5,
+  },
+  noteContentContainer: {
+    flex: 1,
+  },
   noteTextContainer: {
     marginRight: 30,
   },
   noteImportance: {
     color: '#000',
   },
-  toggleThemeButton: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
+  addNoteButton: {
     width: 50,
     height: 50,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 5,
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    bottom: 30,
+    right: 30,
+  },
+  deleteButtonContainer: {
+    justifyContent: 'center',
+    marginLeft: 'auto',
+  },
+  deleteButton: {
+    borderRadius: 15,
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#666',
+    borderWidth: 1,
+  },
+  deleteButtonText: {
+    color: '#888',
+    fontWeight: '200',
+    fontSize: 15,
+    lineHeight: 15,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 9,
+    paddingHorizontal: 10,
+    marginHorizontal: 5,
+    marginTop: 10,
+    marginBottom: 10,
+    height: 50,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+  },
+  themeToggle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: 'transparent',
+  },
+  iconsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: 60,
   },
 })
-
-export const themeToggleStyle: ViewStyle = {
-  position: 'absolute',
-  bottom: 30,
-  right: 30,
-}
-
-export const noteContentContainer = {
-  flex: 1,
-}
-
-export const iconsContainer: ViewStyle = {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  width: 60,
-}
-
-export const note_: ViewStyle = {
-  borderColor: '#000',
-  borderWidth: 0,
-  borderRadius: 10,
-  padding: 15,
-  margin: 5,
-  marginTop: 0,
-  flexDirection: 'row',
-  alignItems: 'stretch',
-}
-
-export const noteInput: TextStyle = {
-  backgroundColor: '#eee',
-  color: '#333',
-  borderBottomColor: '#bbb',
-  borderBottomWidth: 1,
-  flexGrow: 1,
-  padding: 5,
-}
-
-export const deleteButtonContainer: ViewStyle = {
-  justifyContent: 'center',
-  marginLeft: 'auto',
-}
-
-export const deleteButton: ViewStyle = {
-  borderRadius: 15,
-  width: 20,
-  height: 20,
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderColor: '#666',
-  borderWidth: 1,
-}
-
-export const deleteButtonText: TextStyle = {
-  color: '#888',
-  fontWeight: '200',
-  fontSize: 15,
-  lineHeight: 15,
-}

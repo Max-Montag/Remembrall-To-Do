@@ -1,12 +1,19 @@
 import React, {useState, useEffect} from 'react'
-import {ViewStyle, TouchableWithoutFeedback} from 'react-native'
-import {View, TouchableOpacity, ScrollView} from 'react-native'
-import {MaterialIcons} from '@expo/vector-icons'
-import NoteInput from './NoteInput'
-import Note from './Note'
-import {lightTheme, darkTheme, themeToggleStyle} from './styles'
+import {Platform} from 'react-native'
+import {
+  ViewStyle,
+  TouchableWithoutFeedback,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+  Text,
+} from 'react-native'
+import {lightTheme, darkTheme, styles} from './styles'
 import {EditModeContext} from './EditModeContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import changeNavigationBarColor from 'react-native-navigation-bar-color'
+import Note from './Note'
 
 type Note = {
   id: number
@@ -21,6 +28,7 @@ const App = () => {
   const [colorMode, setColorMode] = useState<'light' | 'dark'>('light')
   const [isEditing, setIsEditing] = useState(false)
   const [editingNoteId, setEditingNoteId] = useState<number | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
   const theme = colorMode === 'light' ? lightTheme : darkTheme
 
   useEffect(() => {
@@ -47,19 +55,17 @@ const App = () => {
   }
 
   const addNote = () => {
-    if (input.trim() !== '') {
-      const newNote: Note = {
-        id: Date.now(),
-        content: input,
-        importance: importance,
-      }
-
-      const updatedNotes = [...notes, newNote]
-      setNotes(updatedNotes)
-      saveNotes(updatedNotes)
-      setInput('')
-      setImportance(5)
+    const newNote: Note = {
+      id: Date.now(),
+      content: 'New Note',
+      importance: 4,
     }
+
+    const updatedNotes = [...notes, newNote]
+    setNotes(updatedNotes)
+    saveNotes(updatedNotes)
+    setInput('')
+    setImportance(5)
   }
 
   const updateNote = (id: number, content: string) => {
@@ -77,22 +83,44 @@ const App = () => {
   }
 
   const toggleTheme = () => {
-    setColorMode(colorMode === 'light' ? 'dark' : 'light')
+    const newColorMode = colorMode === 'light' ? 'dark' : 'light'
+    setColorMode(newColorMode)
+    AsyncStorage.setItem('colorMode', newColorMode)
+    setNavigationBarColor(newColorMode === 'dark')
+  }
+
+  const setNavigationBarColor = (isDarkMode: boolean) => {
+    if (Platform.OS === 'android') {
+      changeNavigationBarColor(
+        isDarkMode ? '#333333' : '#f1f1f1',
+        !isDarkMode,
+        true,
+      )
+    }
+  }
+
+  const handleSearchChange = (text: string) => {
+    setSearchQuery(text)
   }
 
   return (
     <EditModeContext.Provider value={{editingNoteId, setEditingNoteId}}>
       <TouchableWithoutFeedback onPress={() => setIsEditing(false)}>
         <View style={theme.container}>
-          <ScrollView contentContainerStyle={{paddingBottom: 70}}>
-            <NoteInput
-              addNote={addNote}
-              input={input}
-              setInput={setInput}
-              importance={importance}
-              setImportance={setImportance}
-              colorMode={colorMode}
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.searchInput}
+              value={searchQuery}
+              onChangeText={handleSearchChange}
+              placeholder='Search notes'
+              placeholderTextColor={theme.placeholder.color}
             />
+            <TouchableOpacity onPress={toggleTheme} style={styles.themeToggle}>
+              {/* ICON!!! */}
+              <Text style={theme.icon}>T</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView contentContainerStyle={{paddingBottom: 70}}>
             {notes.map(note => (
               <Note
                 key={note.id}
@@ -104,13 +132,9 @@ const App = () => {
             ))}
           </ScrollView>
           <TouchableOpacity
-            onPress={toggleTheme}
-            style={[theme.toggleThemeButton as ViewStyle, themeToggleStyle]}>
-            <MaterialIcons
-              name={colorMode === 'light' ? 'brightness-3' : 'brightness-7'}
-              size={24}
-              color='white'
-            />
+            onPress={addNote}
+            style={[styles.addNoteButton, theme.addNoteButton as ViewStyle]}>
+            <Text>+</Text>
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>

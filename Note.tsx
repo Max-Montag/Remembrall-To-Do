@@ -6,19 +6,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native'
-import {
-  styles,
-  lightTheme,
-  darkTheme,
-  lmc,
-  dmc,
-  noteContentContainer,
-  note_,
-  noteInput,
-  deleteButton,
-  deleteButtonContainer,
-  deleteButtonText,
-} from './styles'
+import {styles, lightTheme, darkTheme, lmc, dmc} from './styles'
 import {EditModeContext} from './EditModeContext'
 
 type NoteProps = {
@@ -68,19 +56,19 @@ const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate, colorMode}) => {
     <TouchableWithoutFeedback onPress={handleSave}>
       <View
         style={[
-          note_,
+          styles.note,
           {
             backgroundColor: getImportanceColor(),
           },
         ]}>
         <TouchableOpacity onPress={handleEdit} activeOpacity={1}>
-          <View style={noteContentContainer}>
+          <View style={styles.noteContentContainer}>
             {isEditing ? (
               <>
                 <View style={styles.noteTextContainer}>
                   <TextInput
                     style={[
-                      noteInput,
+                      styles.noteInput,
                       isEditing
                         ? {borderBottomWidth: 0}
                         : {borderBottomWidth: 1},
@@ -106,13 +94,13 @@ const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate, colorMode}) => {
           </View>
         </TouchableOpacity>
         {!isEditing && (
-          <View style={deleteButtonContainer}>
+          <View style={styles.deleteButtonContainer}>
             <TouchableOpacity
-              style={deleteButton}
+              style={styles.deleteButton}
               onPress={() => {
                 onDelete(note.id)
               }}>
-              <Text style={deleteButtonText}>x</Text>
+              <Text style={styles.deleteButtonText}>x</Text>
             </TouchableOpacity>
           </View>
         )}
