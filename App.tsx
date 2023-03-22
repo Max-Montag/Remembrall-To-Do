@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import {Platform} from 'react-native'
 import {
+  Platform,
   ViewStyle,
   TouchableWithoutFeedback,
   View,
@@ -8,6 +8,7 @@ import {
   ScrollView,
   TextInput,
   Text,
+  Keyboard,
 } from 'react-native'
 import {lightTheme, darkTheme, styles} from './styles'
 import {EditModeContext} from './EditModeContext'
@@ -109,7 +110,7 @@ const App = () => {
         <View style={theme.container}>
           <View style={styles.searchContainer}>
             <TextInput
-              style={styles.searchInput}
+              style={[styles.searchInput, theme.searchInput]}
               value={searchQuery}
               onChangeText={handleSearchChange}
               placeholder='Search notes'
@@ -120,7 +121,9 @@ const App = () => {
               <Text style={theme.icon}>T</Text>
             </TouchableOpacity>
           </View>
-          <ScrollView contentContainerStyle={{paddingBottom: 70}}>
+          <ScrollView
+            contentContainerStyle={styles.container}
+            keyboardDismissMode='none'>
             {notes.map(note => (
               <Note
                 key={note.id}

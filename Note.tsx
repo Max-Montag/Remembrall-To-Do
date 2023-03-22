@@ -63,34 +63,23 @@ const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate, colorMode}) => {
         ]}>
         <TouchableOpacity onPress={handleEdit} activeOpacity={1}>
           <View style={styles.noteContentContainer}>
-            {isEditing ? (
-              <>
-                <View style={styles.noteTextContainer}>
-                  <TextInput
-                    style={[
-                      styles.noteInput,
-                      isEditing
-                        ? {borderBottomWidth: 0}
-                        : {borderBottomWidth: 1},
-                      {
-                        backgroundColor: getImportanceColor(),
-                      },
-                    ]}
-                    value={newContent}
-                    onChangeText={text => handleChangeText(text, isEditing)}
-                    onBlur={handleSave}
-                  />
-                </View>
-                <Text style={theme.noteImportance}>{note.importance}</Text>
-              </>
-            ) : (
-              <>
-                <View style={styles.noteTextContainer}>
-                  <Text style={theme.noteText}>{note.content}</Text>
-                  <Text style={theme.noteImportance}>{note.importance}</Text>
-                </View>
-              </>
-            )}
+            <View style={styles.noteTextContainer}>
+              <TextInput
+                style={[
+                  styles.noteInput,
+                  theme.noteText,
+                  styles.noteText,
+                  {
+                    backgroundColor: getImportanceColor(),
+                  },
+                ]}
+                value={newContent}
+                onChangeText={text => handleChangeText(text, isEditing)}
+                onBlur={handleSave}
+                multiline
+              />
+            </View>
+            <Text style={theme.noteImportance}>{note.importance}</Text>
           </View>
         </TouchableOpacity>
         {!isEditing && (
@@ -99,9 +88,7 @@ const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate, colorMode}) => {
               style={styles.deleteButton}
               onPress={() => {
                 onDelete(note.id)
-              }}>
-              <Text style={styles.deleteButtonText}>x</Text>
-            </TouchableOpacity>
+              }}></TouchableOpacity>
           </View>
         )}
       </View>

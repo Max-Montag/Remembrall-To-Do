@@ -15,12 +15,6 @@ export const lightTheme = {
   placeholder: {
     color: '#aaa',
   },
-  importance: {
-    color: '#333',
-  },
-  picker: {
-    color: '#333',
-  },
   icon: {
     color: '#000',
   },
@@ -41,7 +35,7 @@ export const lightTheme = {
     flexDirection: 'row',
   },
   noteText: {
-    color: '#000',
+    color: '#111',
   },
   noteInputBackground: {
     backgroundColor: '#f1f1f1',
@@ -51,6 +45,9 @@ export const lightTheme = {
   },
   addNoteButton: {
     backgroundColor: '#333',
+  },
+  searchInput: {
+    color: '#222',
   },
 }
 
@@ -65,12 +62,6 @@ export const darkTheme = {
   },
   placeholder: {
     color: '#aaa',
-  },
-  importance: {
-    color: '#fff',
-  },
-  picker: {
-    color: '#fff',
   },
   icon: {
     color: '#fff',
@@ -93,7 +84,7 @@ export const darkTheme = {
     flexDirection: 'row',
   },
   noteText: {
-    color: '#fff',
+    color: '#eee',
   },
   noteInputBackground: {
     backgroundColor: '#333',
@@ -104,41 +95,14 @@ export const darkTheme = {
   addNoteButton: {
     backgroundColor: '#666',
   },
+  searchInput: {
+    color: '#ccc',
+  },
 }
 
 export const styles = StyleSheet.create({
-  inputContainer: {
-    flexDirection: 'column',
-    marginBottom: 20,
-    marginTop: 20,
-  },
-  inputOptionsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 5,
-  },
-  picker: {
-    flex: 1,
-  },
-  addButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  fullWidthTextInput: {
-    flex: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 5,
-    marginHorizontal: 5,
-    marginBottom: 10,
-    height: 70,
-    textAlignVertical: 'top', // Android
+  container: {
+    paddingBottom: 70,
   },
   editButton: {
     marginRight: 10,
@@ -157,11 +121,11 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
   },
-  noteText: {
-    color: '#000',
-  },
   noteTextInput: {
     marginRight: 30,
+  },
+  noteText: {
+    borderBottomWidth: 0,
   },
   noteInput: {
     backgroundColor: '#eee',
@@ -197,9 +161,9 @@ export const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
   deleteButton: {
-    borderRadius: 15,
-    width: 20,
-    height: 20,
+    borderRadius: 25,
+    width: 25,
+    height: 25,
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#666',
