@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { View, Text, TouchableOpacity, TextInput,TouchableWithoutFeedback } from "react-native";
-import { lightTheme, darkTheme, noteContentContainer, note_, noteInput, deleteButton, deleteButtonContainer, deleteButtonText } from "./styles";
+import { styles, lightTheme, darkTheme, noteContentContainer, note_, noteInput, deleteButton, deleteButtonContainer, deleteButtonText } from "./styles";
 import { EditModeContext } from "./EditModeContext";
 
 type NoteProps = {
@@ -34,9 +34,12 @@ const Note: React.FC<NoteProps> = ({ note, onDelete, onUpdate, colorMode }) => {
     }
   };
 
-  const handleChangeText = (text: string) => {
+  const handleChangeText = (text: string, isEditing: boolean) => {
     setNewContent(text);
-  };
+    if (isEditing) {
+      setEditingNoteId(null);
+    }
+  };  
 
   return (
     <TouchableWithoutFeedback onPress={handleSave}>
@@ -45,19 +48,27 @@ const Note: React.FC<NoteProps> = ({ note, onDelete, onUpdate, colorMode }) => {
           <View style={noteContentContainer}>
             {isEditing ? (
               <>
+                <View style={styles.noteTextContainer}>
                 <TextInput
-                  style={[noteInput, theme.noteInputBackground]}
+                  style={[
+                    noteInput,
+                    theme.noteInputBackground,
+                    isEditing ? { borderBottomWidth: 0 } : { borderBottomWidth: 1 },
+                  ]}
                   value={newContent}
-                  onChangeText={handleChangeText}
+                  onChangeText={(text) => handleChangeText(text, isEditing)}
                   onBlur={handleSave}
                 />
+                </View>
               </>
             ) : (
               <>
-                <Text style={theme.noteText}>{note.content}</Text>
-                <Text style={theme.noteImportance}>
-                  Priorität: {note.importance}
-                </Text>
+                <View style={styles.noteTextContainer}>
+                  <Text style={theme.noteText}>{note.content}</Text>
+                  <Text style={theme.noteImportance}>
+                    Priorität: {note.importance}
+                  </Text>
+                </View>
               </>
             )}
           </View>

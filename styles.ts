@@ -173,6 +173,12 @@ export const styles = StyleSheet.create({
   noteText: {
     color: '#000',
   },
+  noteTextInput: {
+    marginRight: 30,
+  },
+  noteTextContainer: {
+    marginRight: 30,
+  },  
   noteImportance: {
     color: '#000',
   },
