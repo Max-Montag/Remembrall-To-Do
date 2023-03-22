@@ -151,7 +151,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 5,
-    alignSelf: 'flex-end',
+  },
+  addNoteButtonWrapper: {
     position: 'absolute',
     bottom: 30,
     right: 30,

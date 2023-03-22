@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import {
   View,
   Text,
@@ -26,6 +26,12 @@ const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate, colorMode}) => {
   const {editingNoteId, setEditingNoteId} = useContext(EditModeContext)
   const isEditing = editingNoteId === note.id
 
+  useEffect(() => {
+    if (editingNoteId !== note.id && newContent !== note.content) {
+      onUpdate(note.id, newContent)
+    }
+  }, [editingNoteId, newContent])
+
   const handleEdit = () => {
     if (!isEditing) {
       setEditingNoteId(note.id)
@@ -39,11 +45,8 @@ const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate, colorMode}) => {
     }
   }
 
-  const handleChangeText = (text: string, isEditing: boolean) => {
+  const handleChangeText = (text: string) => {
     setNewContent(text)
-    if (isEditing) {
-      setEditingNoteId(null)
-    }
   }
 
   const getImportanceColor = () => {
@@ -74,9 +77,7 @@ const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate, colorMode}) => {
                   },
                 ]}
                 value={newContent}
-                onChangeText={text => handleChangeText(text, isEditing)}
-                onBlur={handleSave}
-                multiline
+                onChangeText={handleChangeText}
               />
             </View>
             <Text style={theme.noteImportance}>{note.importance}</Text>
