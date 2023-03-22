@@ -29,7 +29,7 @@ const NoteInput: React.FC<NoteInputProps> = ({
         value={input}
         onChangeText={setInput}
         style={[theme.input, styles.fullWidthTextInput]}
-        placeholder="Notiz hinzufügen..."
+        placeholder="To-Do hinzufügen..."
         placeholderTextColor={theme.placeholder.color}
         multiline
       />
@@ -41,11 +41,11 @@ const NoteInput: React.FC<NoteInputProps> = ({
             setImportance(Number(itemValue))
           }
         >
-          <Picker.Item label="1" value={1} />
-          <Picker.Item label="2" value={2} />
-          <Picker.Item label="3" value={3} />
-          <Picker.Item label="4" value={4} />
-          <Picker.Item label="5" value={5} />
+          <Picker.Item label="Extrem hoch" value={1} />
+          <Picker.Item label="Sehr hoch" value={2} />
+          <Picker.Item label="hoch" value={3} />
+          <Picker.Item label="normal" value={4} />
+          <Picker.Item label="Aufschiebbar" value={5} />
         </Picker>
   
         <TouchableOpacity onPress={addNote} style={[theme.addButton, styles.addButton]}>

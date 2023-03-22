@@ -1,5 +1,8 @@
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
+export const lmc = ['#C51427', '#F75F00', '#F3CE3A', '#75F99A', '#D4FBDF'];
+export const dmc = ['#630A14', '#AD4300', '#DBB005', '#46955C', '#AAC9B2'];
+
 export const lightTheme = {
   container: {
     backgroundColor: '#f1f1f1',

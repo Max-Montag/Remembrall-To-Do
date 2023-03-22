@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { View, Text, TouchableOpacity, TextInput,TouchableWithoutFeedback } from "react-native";
-import { styles, lightTheme, darkTheme, noteContentContainer, note_, noteInput, deleteButton, deleteButtonContainer, deleteButtonText } from "./styles";
+import { styles, lightTheme, darkTheme, lmc, dmc, noteContentContainer, note_, noteInput, deleteButton, deleteButtonContainer, deleteButtonText } from "./styles";
 import { EditModeContext } from "./EditModeContext";
 
 type NoteProps = {
@@ -19,70 +19,82 @@ const Note: React.FC<NoteProps> = ({ note, onDelete, onUpdate, colorMode }) => {
   const [newContent, setNewContent] = useState(note.content);
   const { editingNoteId, setEditingNoteId } = useContext(EditModeContext);
   const isEditing = editingNoteId === note.id;
-
-
+  
   const handleEdit = () => {
-    if (!isEditing) {
-      setEditingNoteId(note.id);
-    }
+  if (!isEditing) {
+  setEditingNoteId(note.id);
+  }
   };
-
+  
   const handleSave = () => {
-    if (isEditing) {
-      onUpdate(note.id, newContent);
-      setEditingNoteId(null);
-    }
+  if (isEditing) {
+  onUpdate(note.id, newContent);
+  setEditingNoteId(null);
+  }
+  };
+  
+  const handleChangeText = (text: string, isEditing: boolean) => {
+  setNewContent(text);
+  if (isEditing) {
+  setEditingNoteId(null);
+  }
+  };
+  
+  return (
+  <TouchableWithoutFeedback onPress={handleSave}>
+  <View
+  style={[
+  note_,
+  {
+  backgroundColor:
+  theme === lightTheme
+  ? lmc[note.importance - 1]
+  : dmc[note.importance - 1],
+  },
+  ]}
+  >
+  <TouchableOpacity onPress={handleEdit} activeOpacity={1}>
+  <View style={noteContentContainer}>
+  {isEditing ? (
+  <>
+  <View style={styles.noteTextContainer}>
+  <TextInput
+  style={[
+  noteInput,
+  theme.noteInputBackground,
+  isEditing ? { borderBottomWidth: 0 } : { borderBottomWidth: 1 },
+  ]}
+  value={newContent}
+  onChangeText={(text) => handleChangeText(text, isEditing)}
+  onBlur={handleSave}
+  />
+  </View>
+  <Text style={theme.noteImportance}>
+  {note.importance}
+  </Text>
+  </>
+  ) : (
+  <>
+  <View style={styles.noteTextContainer}>
+  <Text style={theme.noteText}>{note.content}</Text>
+  <Text style={theme.noteImportance}>
+  {note.importance}
+  </Text>
+  </View>
+  </>
+  )}
+  </View>
+  </TouchableOpacity>
+  {!isEditing && (
+  <View style={deleteButtonContainer}>
+  <TouchableOpacity style={deleteButton} onPress={() => {onDelete(note.id);}}>
+  <Text style={deleteButtonText}>x</Text>
+  </TouchableOpacity>
+  </View>
+  )}
+  </View>
+  </TouchableWithoutFeedback>
+  );
   };
 
-  const handleChangeText = (text: string, isEditing: boolean) => {
-    setNewContent(text);
-    if (isEditing) {
-      setEditingNoteId(null);
-    }
-  };  
-
-  return (
-    <TouchableWithoutFeedback onPress={handleSave}>
-      <View style={note_}>
-        <TouchableOpacity onPress={handleEdit} activeOpacity={1}>
-          <View style={noteContentContainer}>
-            {isEditing ? (
-              <>
-                <View style={styles.noteTextContainer}>
-                <TextInput
-                  style={[
-                    noteInput,
-                    theme.noteInputBackground,
-                    isEditing ? { borderBottomWidth: 0 } : { borderBottomWidth: 1 },
-                  ]}
-                  value={newContent}
-                  onChangeText={(text) => handleChangeText(text, isEditing)}
-                  onBlur={handleSave}
-                />
-                </View>
-              </>
-            ) : (
-              <>
-                <View style={styles.noteTextContainer}>
-                  <Text style={theme.noteText}>{note.content}</Text>
-                  <Text style={theme.noteImportance}>
-                    Priorität: {note.importance}
-                  </Text>
-                </View>
-              </>
-            )}
-          </View>
-        </TouchableOpacity>
-        {!isEditing && (
-          <View style={deleteButtonContainer}>
-            <TouchableOpacity style={deleteButton} onPress={() => {onDelete(note.id);}}>
-            <Text style={deleteButtonText}>x</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
-
-export default Note;
+  export default Note;
