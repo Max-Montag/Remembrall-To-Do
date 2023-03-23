@@ -17,6 +17,8 @@ import {
 import {EditModeContext} from './EditModeContext'
 import {useTheme} from './ThemeContext'
 import {Picker} from '@react-native-picker/picker'
+import Trash from './img/icons/Trash'
+import CheckMark from './img/icons/CheckMark'
 
 type TodoProps = {
   todo: {
@@ -130,14 +132,16 @@ const Todo: React.FC<TodoProps> = ({
               onPress={() => {
                 onDelete(todo.id)
               }}>
-              {/* ICON!! */}
+              <Trash color={'#777'} />
             </TouchableOpacity>
           )}
           <TouchableOpacity
             style={styles.tickButton}
             onPress={() => {
               onTick(todo.id)
-            }}></TouchableOpacity>
+            }}>
+            {todo.ticked && <CheckMark />}
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableWithoutFeedback>
