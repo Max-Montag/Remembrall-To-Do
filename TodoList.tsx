@@ -8,13 +8,14 @@ import {
 } from 'react-native'
 import {useNavigation, NavigationProp} from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import PushNotification from 'react-native-push-notification'
+import {createNotificationChannels} from './pushNotificationChannels'
+import {Picker} from '@react-native-picker/picker'
 import Todo from './Todo'
 import {lightTheme, darkTheme, styles} from './styles'
 import {useTheme} from './ThemeContext'
 import Screwdriver from './img/icons/Screwdriver'
 import JournalPlus from './img/icons/JournalPlus'
-import PushNotification from 'react-native-push-notification'
-import {createNotificationChannels} from './pushNotificationChannels'
 
 type Todo = {
   id: number
@@ -47,18 +48,6 @@ const TodoList = () => {
     createNotificationChannels()
     scheduleNotifications()
   }, [todos])
-
-  /*  const showNotification = (todo:Todo): void => {
-    PushNotification.localNotification({
-      channelId: 'default-channel',
-      title: 'Nicht vergessen!',
-      message: todo.content,
-      playSound: true,
-      soundName: 'default',
-      vibrate: true,
-    })
-  }
-  */
 
   const getNotificationInterval = (priority: number) => {
     switch (priority) {
@@ -148,6 +137,14 @@ const TodoList = () => {
     todo.content.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
+  const updateTodoPriority = (id: number, priority: number) => {
+    const updatedTodos = todos.map(todo =>
+      todo.id === id ? {...todo, priority} : todo,
+    )
+    setTodos(updatedTodos)
+    saveTodos(updatedTodos)
+  }
+
   return (
     <View style={[theme.searchContainer, {flex: 1}]}>
       <View style={[styles.searchContainer, theme.searchContainer]}>
@@ -171,6 +168,7 @@ const TodoList = () => {
             todo={todo}
             onDelete={deleteTodo}
             onUpdate={updateTodo}
+            onPriorityChange={updateTodoPriority}
             colorMode={colorMode}
           />
         ))}

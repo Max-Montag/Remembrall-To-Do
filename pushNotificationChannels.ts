@@ -8,7 +8,7 @@ export const createNotificationChannels = (): void => {
       channelDescription: 'A default channel for notifications',
       playSound: true,
       soundName: 'default',
-      importance: 4,
+      importance: 5,
       vibrate: true,
     },
     created => console.log(`createChannel returned '${created}'`),

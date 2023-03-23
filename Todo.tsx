@@ -9,6 +9,7 @@ import {
 import {styles, lightTheme, darkTheme, lmc, dmc} from './styles'
 import {EditModeContext} from './EditModeContext'
 import {useTheme} from './ThemeContext'
+import {Picker} from '@react-native-picker/picker'
 
 type TodoProps = {
   todo: {
@@ -18,10 +19,16 @@ type TodoProps = {
   }
   onDelete: (id: number) => void
   onUpdate: (id: number, content: string) => void
+  onPriorityChange: (id: number, priority: number) => void
   colorMode: 'light' | 'dark'
 }
 
-const Todo: React.FC<TodoProps> = ({todo, onDelete, onUpdate}) => {
+const Todo: React.FC<TodoProps> = ({
+  todo,
+  onDelete,
+  onUpdate,
+  onPriorityChange,
+}) => {
   const {colorMode} = useTheme()
   const theme = colorMode === 'light' ? lightTheme : darkTheme
   const [newContent, setNewContent] = useState(todo.content)
@@ -51,10 +58,12 @@ const Todo: React.FC<TodoProps> = ({todo, onDelete, onUpdate}) => {
     setNewContent(text)
   }
 
+  const handlePriorityChange = (itemValue: number) => {
+    onPriorityChange(todo.id, itemValue)
+  }
+
   const getPriorityColor = () => {
-    return theme === lightTheme
-      ? lmc[todo.priority - 1]
-      : dmc[todo.priority - 1]
+    return theme === lightTheme ? lmc[todo.priority] : dmc[todo.priority]
   }
 
   return (
@@ -82,18 +91,26 @@ const Todo: React.FC<TodoProps> = ({todo, onDelete, onUpdate}) => {
                 onChangeText={handleChangeText}
               />
             </View>
-            <Text style={theme.todoPriority}>{todo.priority}</Text>
+            <Picker
+              selectedValue={todo.priority}
+              onValueChange={handlePriorityChange}
+              style={[styles.priorityPicker, theme.priorityPicker]}
+              mode='dropdown'>
+              <Picker.Item label='Extrem Hoch' value={5} />
+              <Picker.Item label='Sehr Hoch' value={4} />
+              <Picker.Item label='Hoch' value={3} />
+              <Picker.Item label='Normal' value={2} />
+              <Picker.Item label='Niedrig' value={1} />
+            </Picker>
           </View>
         </TouchableOpacity>
-        {!isEditing && (
-          <View style={styles.deleteButtonContainer}>
-            <TouchableOpacity
-              style={styles.deleteButton}
-              onPress={() => {
-                onDelete(todo.id)
-              }}></TouchableOpacity>
-          </View>
-        )}
+        <View style={styles.deleteButtonContainer}>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => {
+              onDelete(todo.id)
+            }}></TouchableOpacity>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   )

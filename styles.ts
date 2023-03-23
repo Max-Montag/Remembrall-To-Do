@@ -1,6 +1,14 @@
 import {StyleSheet} from 'react-native'
 
-export const lmc = ['#C51427', '#F75F00', '#F3CE3A', '#75F99A', '#D4FBDF']
+export const lmc: {
+  [key: number]: string
+} = {
+  5: '#C51427',
+  4: '#F75F00',
+  3: '#F3CE3A',
+  2: '#75F99A',
+  1: '#D4FBDF',
+}
 export const dmc = ['#630A14', '#AD4300', '#DBB005', '#46955C', '#AAC9B2']
 
 export const lightTheme = {
@@ -51,6 +59,7 @@ export const lightTheme = {
   settingsText: {
     color: '#111',
   },
+  priorityPicker: {},
 }
 
 export const darkTheme = {
@@ -101,6 +110,7 @@ export const darkTheme = {
   settingsText: {
     color: '#ccc',
   },
+  priorityPicker: {},
 }
 
 export const styles = StyleSheet.create({
@@ -220,5 +230,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
+  },
+  priorityPicker: {
+    width: 180,
   },
 })
