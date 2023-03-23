@@ -17,7 +17,7 @@ import {useTheme} from './ThemeContext'
 import Screwdriver from './img/icons/Screwdriver'
 import JournalPlus from './img/icons/JournalPlus'
 
-const maxNotificationCount = 100
+const maxNotificationCount = 50
 
 type Todo = {
   id: number
@@ -36,8 +36,6 @@ type TodoListNavigationProp = NavigationProp<
 
 const TodoList = () => {
   const [todos, setTodos] = useState<Todo[]>([])
-  const [input, setInput] = useState('')
-  const [priority, setPriority] = useState<number>(5)
   const [searchQuery, setSearchQuery] = useState('')
   const [scheduling, setScheduling] = useState(Boolean)
   const {colorMode} = useTheme()
@@ -46,12 +44,8 @@ const TodoList = () => {
 
   useEffect(() => {
     loadTodos()
-  }, [])
-
-  useEffect(() => {
     createNotificationChannels()
-    scheduleNotifications()
-  }, [todos])
+  }, [])
 
   const getNotificationInterval = (priority: number) => {
     switch (priority) {
@@ -71,60 +65,34 @@ const TodoList = () => {
   const scheduleNotifications = () => {
     if (!scheduling) {
       setScheduling(true)
-      console.log('Starting Schedule')
-      PushNotification.cancelAllLocalNotifications()
+      setTimeout(() => {
+        PushNotification.cancelAllLocalNotifications()
 
-      if (uncompletedTodos.length > 0) {
-        for (
-          let i = 0;
-          i < maxNotificationCount / uncompletedTodos.length;
-          i++
-        ) {
-          uncompletedTodos.forEach(todo => {
-            const interval = getNotificationInterval(todo.priority)
-            const notificationTime = new Date(Date.now() + interval * i)
+        if (uncompletedTodos.length > 0) {
+          for (
+            let i = 0;
+            i < maxNotificationCount / uncompletedTodos.length;
+            i++
+          ) {
+            uncompletedTodos.forEach(todo => {
+              const interval = getNotificationInterval(todo.priority)
+              const notificationTime = new Date(Date.now() + interval * (i + 1))
 
-            console.log(
-              'Scheduling notification' +
-                i +
-                ' of ' +
-                todo.content +
-                todo.id +
-                ' for time:' +
-                notificationTime +
-                '(total:' +
-                i * uncompletedTodos.length +
-                ')',
-            )
-
-            PushNotification.localNotificationSchedule({
-              channelId: 'default-channel',
-              title: `Nicht vergessen!`,
-              message: todo.content,
-              date: notificationTime,
-              allowWhileIdle: true,
-              playSound: true,
-              soundName: 'default',
-              vibrate: true,
+              PushNotification.localNotificationSchedule({
+                channelId: 'default-channel',
+                title: `Nicht vergessen!`,
+                message: todo.content,
+                date: notificationTime,
+                allowWhileIdle: true,
+                playSound: true,
+                soundName: 'default',
+                vibrate: true,
+              })
             })
-          })
+          }
         }
-      }
-
-      PushNotification.localNotificationSchedule({
-        channelId: 'default-channel',
-        title: `Nutzt du die Remembrall noch?`,
-        message:
-          'Bitte öffne die App, wenn du auch weiterhin Benachrichtigungen erhalten möchtest.',
-        date: new Date(Date.now()),
-        allowWhileIdle: true,
-        playSound: true,
-        soundName: 'default',
-        vibrate: true,
-      })
-
-      console.log('Finishing Schedule')
-      setScheduling(false)
+        setScheduling(false)
+      }, 1000)
     }
   }
 
@@ -133,6 +101,7 @@ const TodoList = () => {
       const storedTodos = await AsyncStorage.getItem('todos')
       if (storedTodos !== null) {
         setTodos(JSON.parse(storedTodos))
+        scheduleNotifications()
       }
     } catch (error) {
       console.error('Error loading todos:', error)
@@ -157,8 +126,7 @@ const TodoList = () => {
     const updatedTodos = [...todos, newTodo]
     setTodos(updatedTodos)
     saveTodos(updatedTodos)
-    setInput('')
-    setPriority(2)
+    scheduleNotifications()
   }
 
   const updateTodo = (id: number, content: string) => {
@@ -167,6 +135,15 @@ const TodoList = () => {
     )
     setTodos(updatedTodos)
     saveTodos(updatedTodos)
+  }
+
+  const updateTodoPriority = (id: number, priority: number) => {
+    const updatedTodos = todos.map(todo =>
+      todo.id === id ? {...todo, priority} : todo,
+    )
+    setTodos(updatedTodos)
+    saveTodos(updatedTodos)
+    scheduleNotifications()
   }
 
   const tickTodo = (id: number) => {
@@ -181,6 +158,7 @@ const TodoList = () => {
     const updatedTodos = todos.filter(todo => todo.id !== id)
     setTodos(updatedTodos)
     saveTodos(updatedTodos)
+    scheduleNotifications()
   }
 
   const handleSearchChange = (text: string) => {
@@ -200,14 +178,6 @@ const TodoList = () => {
   )
 
   const uncompletedTodos = todos.filter(todo => todo.ticked === false)
-
-  const updateTodoPriority = (id: number, priority: number) => {
-    const updatedTodos = todos.map(todo =>
-      todo.id === id ? {...todo, priority} : todo,
-    )
-    setTodos(updatedTodos)
-    saveTodos(updatedTodos)
-  }
 
   return (
     <View style={[theme.searchContainer, {flex: 1}]}>
