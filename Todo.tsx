@@ -5,7 +5,15 @@ import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native'
-import {styles, lightTheme, darkTheme, lmc, dmc, tmc} from './styles'
+import {
+  styles,
+  lightTheme,
+  darkTheme,
+  lightModeColors,
+  darkModeColors,
+  tickedLightModeColors,
+  tickedDarkModeColors,
+} from './styles'
 import {EditModeContext} from './EditModeContext'
 import {useTheme} from './ThemeContext'
 import {Picker} from '@react-native-picker/picker'
@@ -65,9 +73,13 @@ const Todo: React.FC<TodoProps> = ({
   }
 
   const getPriorityColor = () => {
-    if (todo.ticked === false)
-      return theme === lightTheme ? lmc[todo.priority] : dmc[todo.priority]
-    return tmc[todo.priority]
+    return theme === lightTheme
+      ? todo.ticked === false
+        ? lightModeColors[todo.priority]
+        : tickedLightModeColors[todo.priority]
+      : todo.ticked === false
+      ? darkModeColors[todo.priority]
+      : tickedDarkModeColors[todo.priority]
   }
 
   return (
@@ -89,6 +101,7 @@ const Todo: React.FC<TodoProps> = ({
                   styles.todoText,
                   {
                     backgroundColor: getPriorityColor(),
+                    textDecorationLine: todo.ticked ? 'line-through' : 'none',
                   },
                 ]}
                 value={newContent}
@@ -110,9 +123,18 @@ const Todo: React.FC<TodoProps> = ({
             </Picker>
           </View>
         </TouchableOpacity>
-        <View style={styles.deleteButtonContainer}>
+        <View style={styles.tickButtonContainer}>
+          {todo.ticked && (
+            <TouchableOpacity
+              style={styles.tickButton}
+              onPress={() => {
+                onDelete(todo.id)
+              }}>
+              {/* ICON!! */}
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
-            style={styles.deleteButton}
+            style={styles.tickButton}
             onPress={() => {
               onTick(todo.id)
             }}></TouchableOpacity>

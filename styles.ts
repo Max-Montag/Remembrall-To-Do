@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 
-export const lmc: {
+export const lightModeColors: {
   [key: number]: string
 } = {
   5: '#C51427',
@@ -9,17 +9,17 @@ export const lmc: {
   2: '#75F99A',
   1: '#D4FBDF',
 }
-export const dmc: {
+export const darkModeColors: {
   [key: number]: string
 } = {
-  5: '#630A14',
-  4: '#AD4300',
+  5: '#cc3300',
+  4: '#e68a00',
   3: '#DBB005',
   2: '#46955C',
   1: '#AAC9B2',
 }
 
-export const tmc: {
+export const tickedLightModeColors: {
   [key: number]: string
 } = {
   5: '#ffd6cc',
@@ -27,6 +27,16 @@ export const tmc: {
   3: '#ffffcc',
   2: '#d9ffcc',
   1: '#e6ffe6',
+}
+
+export const tickedDarkModeColors: {
+  [key: number]: string
+} = {
+  5: '#4d0000',
+  4: '#86592d',
+  3: '#808000',
+  2: '#1a3300',
+  1: '#00663d',
 }
 
 export const lightTheme = {
@@ -51,7 +61,7 @@ export const lightTheme = {
   iconsContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
-  deleteButton: {
+  tickButton: {
     backgroundColor: '#ccc',
   },
   todo: {
@@ -104,7 +114,7 @@ export const darkTheme = {
   iconsContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
-  deleteButton: {
+  tickButton: {
     backgroundColor: '#444',
   },
   todo: {
@@ -194,11 +204,11 @@ export const styles = StyleSheet.create({
     bottom: 30,
     right: 30,
   },
-  deleteButtonContainer: {
+  tickButtonContainer: {
     justifyContent: 'center',
     marginLeft: 'auto',
   },
-  deleteButton: {
+  tickButton: {
     borderRadius: 25,
     width: 25,
     height: 25,
@@ -206,12 +216,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: '#666',
     borderWidth: 1,
-  },
-  deleteButtonText: {
-    color: '#888',
-    fontWeight: '200',
-    fontSize: 15,
-    lineHeight: 15,
   },
   searchContainer: {
     flexDirection: 'row',
