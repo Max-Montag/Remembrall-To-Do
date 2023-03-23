@@ -19,7 +19,7 @@ import {createNotificationChannels} from './pushNotificationChannels'
 type Todo = {
   id: number
   content: string
-  importance: number
+  priority: number
 }
 
 type TodoListNavigationProp = NavigationProp<
@@ -33,7 +33,7 @@ type TodoListNavigationProp = NavigationProp<
 const TodoList = () => {
   const [todos, setTodos] = useState<Todo[]>([])
   const [input, setInput] = useState('')
-  const [importance, setImportance] = useState<number>(5)
+  const [priority, setPriority] = useState<number>(5)
   const [searchQuery, setSearchQuery] = useState('')
   const {colorMode} = useTheme()
   const theme = colorMode === 'light' ? lightTheme : darkTheme
@@ -48,16 +48,17 @@ const TodoList = () => {
     scheduleNotifications()
   }, [todos])
 
-  const showNotification = (): void => {
+  /*  const showNotification = (todo:Todo): void => {
     PushNotification.localNotification({
       channelId: 'default-channel',
-      title: 'He Du :)',
-      message: 'Du Your stuff! :O',
+      title: 'Nicht vergessen!',
+      message: todo.content,
       playSound: true,
       soundName: 'default',
       vibrate: true,
     })
   }
+  */
 
   const getNotificationInterval = (priority: number) => {
     switch (priority) {
@@ -77,12 +78,11 @@ const TodoList = () => {
   const scheduleNotifications = () => {
     PushNotification.cancelAllLocalNotifications()
     todos.forEach(todo => {
-      console.log(todo.importance)
-      const interval = getNotificationInterval(todo.importance)
+      const interval = getNotificationInterval(todo.priority)
 
       PushNotification.localNotificationSchedule({
         channelId: 'default-channel',
-        title: `Erinnerung: ${todo.id}`,
+        title: `Nicht vergessen!`,
         message: todo.content,
         date: new Date(Date.now() + interval),
         allowWhileIdle: true,
@@ -116,16 +116,14 @@ const TodoList = () => {
     const newTodo: Todo = {
       id: Date.now(),
       content: 'New Todo',
-      importance: 4,
+      priority: 4,
     }
 
     const updatedTodos = [...todos, newTodo]
     setTodos(updatedTodos)
     saveTodos(updatedTodos)
     setInput('')
-    setImportance(5)
-
-    showNotification()
+    setPriority(5)
   }
 
   const updateTodo = (id: number, content: string) => {

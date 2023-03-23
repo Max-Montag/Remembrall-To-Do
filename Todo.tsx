@@ -14,7 +14,7 @@ type TodoProps = {
   todo: {
     id: number
     content: string
-    importance: number
+    priority: number
   }
   onDelete: (id: number) => void
   onUpdate: (id: number, content: string) => void
@@ -51,10 +51,10 @@ const Todo: React.FC<TodoProps> = ({todo, onDelete, onUpdate}) => {
     setNewContent(text)
   }
 
-  const getImportanceColor = () => {
+  const getPriorityColor = () => {
     return theme === lightTheme
-      ? lmc[todo.importance - 1]
-      : dmc[todo.importance - 1]
+      ? lmc[todo.priority - 1]
+      : dmc[todo.priority - 1]
   }
 
   return (
@@ -63,7 +63,7 @@ const Todo: React.FC<TodoProps> = ({todo, onDelete, onUpdate}) => {
         style={[
           styles.todo,
           {
-            backgroundColor: getImportanceColor(),
+            backgroundColor: getPriorityColor(),
           },
         ]}>
         <TouchableOpacity onPress={handleEdit} activeOpacity={1}>
@@ -75,14 +75,14 @@ const Todo: React.FC<TodoProps> = ({todo, onDelete, onUpdate}) => {
                   theme.todoText,
                   styles.todoText,
                   {
-                    backgroundColor: getImportanceColor(),
+                    backgroundColor: getPriorityColor(),
                   },
                 ]}
                 value={newContent}
                 onChangeText={handleChangeText}
               />
             </View>
-            <Text style={theme.todoImportance}>{todo.importance}</Text>
+            <Text style={theme.todoPriority}>{todo.priority}</Text>
           </View>
         </TouchableOpacity>
         {!isEditing && (

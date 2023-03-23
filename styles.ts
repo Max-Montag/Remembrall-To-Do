@@ -34,7 +34,7 @@ export const lightTheme = {
   todoText: {
     color: '#111',
   },
-  todoImportance: {
+  todoPriority: {
     color: '#999',
   },
   addTodoButton: {
@@ -84,7 +84,7 @@ export const darkTheme = {
   todoText: {
     color: '#eee',
   },
-  todoImportance: {
+  todoPriority: {
     color: '#999',
   },
   addTodoButton: {
@@ -145,7 +145,7 @@ export const styles = StyleSheet.create({
   todoTextContainer: {
     marginRight: 30,
   },
-  todoImportance: {
+  todoPriority: {
     color: '#000',
   },
   addTodoButton: {
