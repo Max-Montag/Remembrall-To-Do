@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {TouchableWithoutFeedback, View} from 'react-native'
 import {NavigationContainer} from '@react-navigation/native'
 import AppNavigator from './AppNavigator'

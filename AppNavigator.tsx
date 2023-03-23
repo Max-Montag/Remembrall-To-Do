@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import Settings from './Settings'
 import NoteList from './NoteList'
 import {useTheme} from './ThemeContext'
-import {lightTheme, darkTheme, styles} from './styles'
+import {lightTheme, darkTheme} from './styles'
 
 const Stack = createStackNavigator()
 

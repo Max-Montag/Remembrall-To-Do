@@ -13,6 +13,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Note from './Note'
 import {lightTheme, darkTheme, styles} from './styles'
 import {useTheme} from './ThemeContext'
+import Screwdriver from './img/icons/Screwdriver'
+import JournalPlus from './img/icons/JournalPlus'
 
 type Note = {
   id: number
@@ -109,8 +111,7 @@ const NoteList = () => {
         <TouchableOpacity
           onPress={() => navigation.navigate('Settings')}
           style={styles.themeToggle}>
-          {/* ICON!!! */}
-          <Text style={theme.icon}>T</Text>
+          <Screwdriver color={theme.icon.color} width={24} height={24} />
         </TouchableOpacity>
       </View>
       <ScrollView style={theme.container} keyboardDismissMode='none'>
@@ -128,7 +129,11 @@ const NoteList = () => {
         <TouchableOpacity
           onPress={addNote}
           style={[styles.addNoteButton, theme.addNoteButton as ViewStyle]}>
-          <Text>+</Text>
+          <JournalPlus
+            color={theme.addNoteButton.color}
+            width={24}
+            height={24}
+          />
         </TouchableOpacity>
       </View>
     </View>

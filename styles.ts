@@ -1,4 +1,4 @@
-import {StyleSheet, ViewStyle, TextStyle} from 'react-native'
+import {StyleSheet} from 'react-native'
 
 export const lmc = ['#C51427', '#F75F00', '#F3CE3A', '#75F99A', '#D4FBDF']
 export const dmc = ['#630A14', '#AD4300', '#DBB005', '#46955C', '#AAC9B2']
@@ -25,9 +25,6 @@ export const lightTheme = {
   iconsContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
-  addButton: {
-    backgroundColor: '#333',
-  },
   deleteButton: {
     backgroundColor: '#ccc',
   },
@@ -42,6 +39,7 @@ export const lightTheme = {
   },
   addNoteButton: {
     backgroundColor: '#333',
+    color: '#ccc',
   },
   searchInput: {
     backgroundColor: '#eee',
@@ -77,10 +75,6 @@ export const darkTheme = {
   iconsContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
-  addButton: {
-    backgroundColor: '#666',
-    color: '#999',
-  },
   deleteButton: {
     backgroundColor: '#444',
   },
@@ -95,6 +89,7 @@ export const darkTheme = {
   },
   addNoteButton: {
     backgroundColor: '#666',
+    color: '#ccc',
   },
   searchInput: {
     backgroundColor: '#333',
