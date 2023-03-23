@@ -19,6 +19,16 @@ export const dmc: {
   1: '#AAC9B2',
 }
 
+export const tmc: {
+  [key: number]: string
+} = {
+  5: '#ffd6cc',
+  4: '#fff0b3',
+  3: '#ffffcc',
+  2: '#d9ffcc',
+  1: '#e6ffe6',
+}
+
 export const lightTheme = {
   container: {
     backgroundColor: '#f1f1f1',

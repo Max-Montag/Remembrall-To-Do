@@ -12,7 +12,6 @@ import {useNavigation, NavigationProp} from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import PushNotification from 'react-native-push-notification'
 import {createNotificationChannels} from './pushNotificationChannels'
-import {Picker} from '@react-native-picker/picker'
 import Todo from './Todo'
 import {lightTheme, darkTheme, styles} from './styles'
 import {useTheme} from './ThemeContext'
@@ -107,7 +106,7 @@ const TodoList = () => {
   const addTodo = () => {
     const newTodo: Todo = {
       id: Date.now(),
-      content: input,
+      content: 'Neues To-Do',
       priority,
       ticked: false,
     }
@@ -115,7 +114,7 @@ const TodoList = () => {
     setTodos(updatedTodos)
     saveTodos(updatedTodos)
     setInput('')
-    setPriority(5)
+    setPriority(2)
   }
 
   const updateTodo = (id: number, content: string) => {
@@ -128,8 +127,14 @@ const TodoList = () => {
 
   const tickTodo = (id: number) => {
     const updatedTodos = todos.map(todo =>
-      todo.id === id ? {...todo, ticked: true} : todo,
+      todo.id === id ? {...todo, ticked: !todo.ticked} : todo,
     )
+    setTodos(updatedTodos)
+    saveTodos(updatedTodos)
+  }
+
+  const deleteTodo = (id: number) => {
+    const updatedTodos = todos.filter(todo => todo.id !== id)
     setTodos(updatedTodos)
     saveTodos(updatedTodos)
   }
@@ -138,8 +143,10 @@ const TodoList = () => {
     setSearchQuery(text)
   }
 
-  const filteredTodos = todos.filter(todo =>
-    todo.content.toLowerCase().includes(searchQuery.toLowerCase()),
+  const filteredTodos = todos.filter(
+    todo =>
+      !todo.ticked &&
+      todo.content.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   const completedTodos = todos.filter(todo => todo.ticked === true)
@@ -173,10 +180,11 @@ const TodoList = () => {
           <Todo
             key={todo.id}
             todo={todo}
-            onDelete={tickTodo}
+            onDelete={() => {}}
+            onTick={tickTodo}
             onUpdate={updateTodo}
             onPriorityChange={updateTodoPriority}
-            colorMode={colorMode}
+            isCompleted
           />
         ))}
         {completedTodos.length > 0 && (
@@ -194,10 +202,11 @@ const TodoList = () => {
                 <View style={[styles.todo]}>
                   <Todo
                     todo={item}
-                    onDelete={() => {}}
+                    onDelete={deleteTodo}
+                    onTick={tickTodo}
                     onUpdate={updateTodo}
                     onPriorityChange={updateTodoPriority}
-                    colorMode={colorMode}
+                    isCompleted={true}
                   />
                 </View>
               )}
