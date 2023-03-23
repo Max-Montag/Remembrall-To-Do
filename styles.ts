@@ -28,16 +28,16 @@ export const lightTheme = {
   deleteButton: {
     backgroundColor: '#ccc',
   },
-  note: {
+  todo: {
     backgroundColor: '#333',
   },
-  noteText: {
+  todoText: {
     color: '#111',
   },
-  noteImportance: {
+  todoImportance: {
     color: '#999',
   },
-  addNoteButton: {
+  addTodoButton: {
     backgroundColor: '#333',
     color: '#ccc',
   },
@@ -78,16 +78,16 @@ export const darkTheme = {
   deleteButton: {
     backgroundColor: '#444',
   },
-  note: {
+  todo: {
     backgroundColor: '#fff',
   },
-  noteText: {
+  todoText: {
     color: '#eee',
   },
-  noteImportance: {
+  todoImportance: {
     color: '#999',
   },
-  addNoteButton: {
+  addTodoButton: {
     backgroundColor: '#666',
     color: '#ccc',
   },
@@ -114,7 +114,7 @@ export const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-  note: {
+  todo: {
     borderColor: '#000',
     borderWidth: 0,
     borderRadius: 10,
@@ -125,13 +125,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
   },
-  noteTextInput: {
+  todoTextInput: {
     marginRight: 30,
   },
-  noteText: {
+  todoText: {
     borderBottomWidth: 0,
   },
-  noteInput: {
+  todoInput: {
     backgroundColor: '#eee',
     color: '#333',
     borderBottomColor: '#bbb',
@@ -139,16 +139,16 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 5,
   },
-  noteContentContainer: {
+  todoContentContainer: {
     flex: 1,
   },
-  noteTextContainer: {
+  todoTextContainer: {
     marginRight: 30,
   },
-  noteImportance: {
+  todoImportance: {
     color: '#000',
   },
-  addNoteButton: {
+  addTodoButton: {
     width: 50,
     height: 50,
     borderRadius: 25,
@@ -156,7 +156,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 5,
   },
-  addNoteButtonWrapper: {
+  addTodoButtonWrapper: {
     position: 'absolute',
     bottom: 30,
     right: 30,

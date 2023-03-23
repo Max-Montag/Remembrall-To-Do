@@ -1,7 +1,7 @@
 import React from 'react'
 import {createStackNavigator} from '@react-navigation/stack'
 import Settings from './Settings'
-import NoteList from './NoteList'
+import TodoList from './TodoList'
 import {useTheme} from './ThemeContext'
 import {lightTheme, darkTheme} from './styles'
 
@@ -14,8 +14,8 @@ const AppNavigator: React.FC = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='NoteList'
-        component={NoteList}
+        name='TodoList'
+        component={TodoList}
         options={{headerShown: false}}
       />
       <Stack.Screen

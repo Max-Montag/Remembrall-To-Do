@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {TouchableWithoutFeedback, View} from 'react-native'
 import {NavigationContainer} from '@react-navigation/native'
 import AppNavigator from './AppNavigator'
@@ -8,21 +8,23 @@ import {ThemeProvider, useTheme} from './ThemeContext'
 import {EditModeContext} from './EditModeContext'
 
 export type RootStackParamList = {
-  NoteList: undefined
+  TodoList: undefined
   Settings: undefined
 }
 
 const App = () => {
-  const [editingNoteId, setEditingNoteId] = useState<number | null>(null)
+  const [editingTodoId, setEditingTodoId] = useState<number | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const {colorMode} = useTheme()
   const theme = colorMode === 'light' ? lightTheme : darkTheme
+
+  const [ctr, setCTR] = useState<number>(0)
 
   return (
     <ThemeProvider>
       <SafeAreaProvider>
         <NavigationContainer>
-          <EditModeContext.Provider value={{editingNoteId, setEditingNoteId}}>
+          <EditModeContext.Provider value={{editingTodoId, setEditingTodoId}}>
             <TouchableWithoutFeedback onPress={() => setIsEditing(false)}>
               <View style={theme.container}>
                 <AppNavigator />

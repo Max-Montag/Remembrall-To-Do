@@ -10,8 +10,8 @@ import {styles, lightTheme, darkTheme, lmc, dmc} from './styles'
 import {EditModeContext} from './EditModeContext'
 import {useTheme} from './ThemeContext'
 
-type NoteProps = {
-  note: {
+type TodoProps = {
+  todo: {
     id: number
     content: string
     importance: number
@@ -21,29 +21,29 @@ type NoteProps = {
   colorMode: 'light' | 'dark'
 }
 
-const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate}) => {
+const Todo: React.FC<TodoProps> = ({todo, onDelete, onUpdate}) => {
   const {colorMode} = useTheme()
   const theme = colorMode === 'light' ? lightTheme : darkTheme
-  const [newContent, setNewContent] = useState(note.content)
-  const {editingNoteId, setEditingNoteId} = useContext(EditModeContext)
-  const isEditing = editingNoteId === note.id
+  const [newContent, setNewContent] = useState(todo.content)
+  const {editingTodoId, setEditingTodoId} = useContext(EditModeContext)
+  const isEditing = editingTodoId === todo.id
 
   useEffect(() => {
-    if (editingNoteId !== note.id && newContent !== note.content) {
-      onUpdate(note.id, newContent)
+    if (editingTodoId !== todo.id && newContent !== todo.content) {
+      onUpdate(todo.id, newContent)
     }
-  }, [editingNoteId, newContent])
+  }, [editingTodoId, newContent])
 
   const handleEdit = () => {
     if (!isEditing) {
-      setEditingNoteId(note.id)
+      setEditingTodoId(todo.id)
     }
   }
 
   const handleSave = () => {
     if (isEditing) {
-      onUpdate(note.id, newContent)
-      setEditingNoteId(null)
+      onUpdate(todo.id, newContent)
+      setEditingTodoId(null)
     }
   }
 
@@ -53,27 +53,27 @@ const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate}) => {
 
   const getImportanceColor = () => {
     return theme === lightTheme
-      ? lmc[note.importance - 1]
-      : dmc[note.importance - 1]
+      ? lmc[todo.importance - 1]
+      : dmc[todo.importance - 1]
   }
 
   return (
     <TouchableWithoutFeedback onPress={handleSave}>
       <View
         style={[
-          styles.note,
+          styles.todo,
           {
             backgroundColor: getImportanceColor(),
           },
         ]}>
         <TouchableOpacity onPress={handleEdit} activeOpacity={1}>
-          <View style={styles.noteContentContainer}>
-            <View style={styles.noteTextContainer}>
+          <View style={styles.todoContentContainer}>
+            <View style={styles.todoTextContainer}>
               <TextInput
                 style={[
-                  styles.noteInput,
-                  theme.noteText,
-                  styles.noteText,
+                  styles.todoInput,
+                  theme.todoText,
+                  styles.todoText,
                   {
                     backgroundColor: getImportanceColor(),
                   },
@@ -82,7 +82,7 @@ const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate}) => {
                 onChangeText={handleChangeText}
               />
             </View>
-            <Text style={theme.noteImportance}>{note.importance}</Text>
+            <Text style={theme.todoImportance}>{todo.importance}</Text>
           </View>
         </TouchableOpacity>
         {!isEditing && (
@@ -90,7 +90,7 @@ const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate}) => {
             <TouchableOpacity
               style={styles.deleteButton}
               onPress={() => {
-                onDelete(note.id)
+                onDelete(todo.id)
               }}></TouchableOpacity>
           </View>
         )}
@@ -99,4 +99,4 @@ const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate}) => {
   )
 }
 
-export default Note
+export default Todo
