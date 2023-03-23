@@ -8,6 +8,10 @@ export const lightTheme = {
     backgroundColor: '#f1f1f1',
     flex: 1,
   },
+  settingsHeader: {
+    backgroundColor: '#f1f1f1',
+    color: '#333',
+  },
   input: {
     backgroundColor: '#fff',
     color: '#333',
@@ -29,16 +33,9 @@ export const lightTheme = {
   },
   note: {
     backgroundColor: '#333',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 10,
-    flexDirection: 'row',
   },
   noteText: {
     color: '#111',
-  },
-  noteInputBackground: {
-    backgroundColor: '#f1f1f1',
   },
   noteImportance: {
     color: '#999',
@@ -47,7 +44,14 @@ export const lightTheme = {
     backgroundColor: '#333',
   },
   searchInput: {
+    backgroundColor: '#eee',
     color: '#222',
+  },
+  searchContainer: {
+    backgroundColor: '#eee',
+  },
+  settingsText: {
+    color: '#111',
   },
 }
 
@@ -55,6 +59,10 @@ export const darkTheme = {
   container: {
     backgroundColor: '#333',
     flex: 1,
+  },
+  settingsHeader: {
+    backgroundColor: '#333',
+    color: '#fff',
   },
   input: {
     backgroundColor: '#666',
@@ -78,16 +86,9 @@ export const darkTheme = {
   },
   note: {
     backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 10,
-    flexDirection: 'row',
   },
   noteText: {
     color: '#eee',
-  },
-  noteInputBackground: {
-    backgroundColor: '#333',
   },
   noteImportance: {
     color: '#999',
@@ -96,6 +97,13 @@ export const darkTheme = {
     backgroundColor: '#666',
   },
   searchInput: {
+    backgroundColor: '#333',
+    color: '#ccc',
+  },
+  searchContainer: {
+    backgroundColor: '#333',
+  },
+  settingsText: {
     color: '#ccc',
   },
 }
@@ -118,6 +126,7 @@ export const styles = StyleSheet.create({
     padding: 15,
     margin: 5,
     marginTop: 0,
+    marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'stretch',
   },
@@ -206,5 +215,15 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: 60,
+  },
+  settingsText: {
+    fontSize: 20,
+  },
+  row: {
+    marginTop: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
   },
 })

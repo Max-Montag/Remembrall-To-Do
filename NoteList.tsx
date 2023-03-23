@@ -9,7 +9,6 @@ import {
   ViewStyle,
 } from 'react-native'
 import {useNavigation, NavigationProp} from '@react-navigation/native'
-import changeNavigationBarColor from 'react-native-navigation-bar-color'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Note from './Note'
 import {lightTheme, darkTheme, styles} from './styles'
@@ -33,8 +32,8 @@ const NoteList = () => {
   const [notes, setNotes] = useState<Note[]>([])
   const [input, setInput] = useState('')
   const [importance, setImportance] = useState<number>(5)
-  const {colorMode, setColorMode} = useTheme()
   const [searchQuery, setSearchQuery] = useState('')
+  const {colorMode} = useTheme()
   const theme = colorMode === 'light' ? lightTheme : darkTheme
   const navigation = useNavigation<NoteListNavigationProp>()
 
@@ -89,23 +88,6 @@ const NoteList = () => {
     saveNotes(updatedNotes)
   }
 
-  const toggleTheme = () => {
-    const newColorMode = colorMode === 'light' ? 'dark' : 'light'
-    AsyncStorage.setItem('colorMode', newColorMode)
-    setNavigationBarColor(newColorMode === 'dark')
-    setColorMode(newColorMode)
-  }
-
-  const setNavigationBarColor = (isDarkMode: boolean) => {
-    if (Platform.OS === 'android') {
-      changeNavigationBarColor(
-        isDarkMode ? '#333333' : '#f1f1f1',
-        !isDarkMode,
-        true,
-      )
-    }
-  }
-
   const handleSearchChange = (text: string) => {
     setSearchQuery(text)
   }
@@ -115,8 +97,8 @@ const NoteList = () => {
   )
 
   return (
-    <View style={{flex: 1}}>
-      <View style={styles.searchContainer}>
+    <View style={[theme.searchContainer, {flex: 1}]}>
+      <View style={[styles.searchContainer, theme.searchContainer]}>
         <TextInput
           style={[styles.searchInput, theme.searchInput]}
           value={searchQuery}
@@ -131,9 +113,7 @@ const NoteList = () => {
           <Text style={theme.icon}>T</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView
-        contentContainerStyle={styles.container}
-        keyboardDismissMode='none'>
+      <ScrollView style={theme.container} keyboardDismissMode='none'>
         {filteredNotes.map(note => (
           <Note
             key={note.id}

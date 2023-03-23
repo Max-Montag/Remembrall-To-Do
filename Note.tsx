@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import {styles, lightTheme, darkTheme, lmc, dmc} from './styles'
 import {EditModeContext} from './EditModeContext'
+import {useTheme} from './ThemeContext'
 
 type NoteProps = {
   note: {
@@ -20,7 +21,8 @@ type NoteProps = {
   colorMode: 'light' | 'dark'
 }
 
-const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate, colorMode}) => {
+const Note: React.FC<NoteProps> = ({note, onDelete, onUpdate}) => {
+  const {colorMode} = useTheme()
   const theme = colorMode === 'light' ? lightTheme : darkTheme
   const [newContent, setNewContent] = useState(note.content)
   const {editingNoteId, setEditingNoteId} = useContext(EditModeContext)
