@@ -149,7 +149,11 @@ const TodoList = () => {
       todo.content.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
-  const completedTodos = todos.filter(todo => todo.ticked === true)
+  const completedTodos = todos.filter(
+    todo =>
+      todo.ticked === true &&
+      todo.content.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
 
   const updateTodoPriority = (id: number, priority: number) => {
     const updatedTodos = todos.map(todo =>
@@ -195,22 +199,17 @@ const TodoList = () => {
                 Erledigt
               </Text>
             </View>
-            <FlatList
-              data={completedTodos}
-              keyExtractor={item => item.id.toString()}
-              renderItem={({item}) => (
-                <View style={[styles.todo]}>
-                  <Todo
-                    todo={item}
-                    onDelete={deleteTodo}
-                    onTick={tickTodo}
-                    onUpdate={updateTodo}
-                    onPriorityChange={updateTodoPriority}
-                    isCompleted={true}
-                  />
-                </View>
-              )}
-            />
+            {completedTodos.map(todo => (
+              <Todo
+                key={todo.id}
+                todo={todo}
+                onDelete={deleteTodo}
+                onTick={tickTodo}
+                onUpdate={updateTodo}
+                onPriorityChange={updateTodoPriority}
+                isCompleted
+              />
+            ))}
           </View>
         )}
       </ScrollView>

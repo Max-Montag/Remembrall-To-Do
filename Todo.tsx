@@ -128,7 +128,7 @@ const Todo: React.FC<TodoProps> = ({
         <View style={styles.tickButtonContainer}>
           {todo.ticked && (
             <TouchableOpacity
-              style={styles.tickButton}
+              style={[styles.deleteButton, styles.tickButton]}
               onPress={() => {
                 onDelete(todo.id)
               }}>

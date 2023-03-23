@@ -32,11 +32,11 @@ export const tickedLightModeColors: {
 export const tickedDarkModeColors: {
   [key: number]: string
 } = {
-  5: '#4d0000',
-  4: '#86592d',
-  3: '#808000',
-  2: '#1a3300',
-  1: '#00663d',
+  5: '#5e4847',
+  4: '#8f7651',
+  3: '#83815d',
+  2: '#506656',
+  1: '#78877c',
 }
 
 export const lightTheme = {
@@ -216,6 +216,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: '#666',
     borderWidth: 1,
+  },
+  deleteButton: {
+    marginBottom: 10,
   },
   searchContainer: {
     flexDirection: 'row',
