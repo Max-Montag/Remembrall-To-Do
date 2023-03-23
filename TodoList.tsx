@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import {
+  Text,
   View,
   TouchableOpacity,
   ScrollView,
   TextInput,
   ViewStyle,
+  FlatList,
 } from 'react-native'
 import {useNavigation, NavigationProp} from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -21,6 +23,7 @@ type Todo = {
   id: number
   content: string
   priority: number
+  ticked: boolean
 }
 
 type TodoListNavigationProp = NavigationProp<
@@ -104,10 +107,10 @@ const TodoList = () => {
   const addTodo = () => {
     const newTodo: Todo = {
       id: Date.now(),
-      content: 'New Todo',
-      priority: 4,
+      content: input,
+      priority,
+      ticked: false,
     }
-
     const updatedTodos = [...todos, newTodo]
     setTodos(updatedTodos)
     saveTodos(updatedTodos)
@@ -123,8 +126,10 @@ const TodoList = () => {
     saveTodos(updatedTodos)
   }
 
-  const deleteTodo = (id: number) => {
-    const updatedTodos = todos.filter(todo => todo.id !== id)
+  const tickTodo = (id: number) => {
+    const updatedTodos = todos.map(todo =>
+      todo.id === id ? {...todo, ticked: true} : todo,
+    )
     setTodos(updatedTodos)
     saveTodos(updatedTodos)
   }
@@ -136,6 +141,8 @@ const TodoList = () => {
   const filteredTodos = todos.filter(todo =>
     todo.content.toLowerCase().includes(searchQuery.toLowerCase()),
   )
+
+  const completedTodos = todos.filter(todo => todo.ticked === true)
 
   const updateTodoPriority = (id: number, priority: number) => {
     const updatedTodos = todos.map(todo =>
@@ -166,12 +173,37 @@ const TodoList = () => {
           <Todo
             key={todo.id}
             todo={todo}
-            onDelete={deleteTodo}
+            onDelete={tickTodo}
             onUpdate={updateTodo}
             onPriorityChange={updateTodoPriority}
             colorMode={colorMode}
           />
         ))}
+        {completedTodos.length > 0 && (
+          <View>
+            <View style={styles.separator} />
+            <View style={styles.separatorTextWrapper}>
+              <Text style={[theme.separatorText, styles.separatorText]}>
+                Erledigt
+              </Text>
+            </View>
+            <FlatList
+              data={completedTodos}
+              keyExtractor={item => item.id.toString()}
+              renderItem={({item}) => (
+                <View style={[styles.todo]}>
+                  <Todo
+                    todo={item}
+                    onDelete={() => {}}
+                    onUpdate={updateTodo}
+                    onPriorityChange={updateTodoPriority}
+                    colorMode={colorMode}
+                  />
+                </View>
+              )}
+            />
+          </View>
+        )}
       </ScrollView>
       <View style={styles.addTodoButtonWrapper}>
         <TouchableOpacity

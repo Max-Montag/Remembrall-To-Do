@@ -67,6 +67,9 @@ export const lightTheme = {
   settingsText: {
     color: '#111',
   },
+  separatorText: {
+    color: '#666',
+  },
 }
 
 export const darkTheme = {
@@ -116,6 +119,9 @@ export const darkTheme = {
   },
   settingsText: {
     color: '#ccc',
+  },
+  separatorText: {
+    color: '#bbb',
   },
 }
 
@@ -243,5 +249,18 @@ export const styles = StyleSheet.create({
   },
   pickerItemStyle: {
     fontSize: 5,
+  },
+  separator: {
+    borderTopColor: '#777',
+    borderTopWidth: 0.5,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  separatorTextWrapper: {
+    alignItems: 'center',
+  },
+  separatorText: {
+    marginTop: 5,
+    fontSize: 17,
   },
 })
