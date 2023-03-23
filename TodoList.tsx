@@ -6,7 +6,6 @@ import {
   ScrollView,
   TextInput,
   ViewStyle,
-  FlatList,
 } from 'react-native'
 import {useNavigation, NavigationProp} from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -17,6 +16,8 @@ import {lightTheme, darkTheme, styles} from './styles'
 import {useTheme} from './ThemeContext'
 import Screwdriver from './img/icons/Screwdriver'
 import JournalPlus from './img/icons/JournalPlus'
+
+const maxNotificationCount = 100
 
 type Todo = {
   id: number
@@ -38,6 +39,7 @@ const TodoList = () => {
   const [input, setInput] = useState('')
   const [priority, setPriority] = useState<number>(5)
   const [searchQuery, setSearchQuery] = useState('')
+  const [scheduling, setScheduling] = useState(Boolean)
   const {colorMode} = useTheme()
   const theme = colorMode === 'light' ? lightTheme : darkTheme
   const navigation = useNavigation<TodoListNavigationProp>()
@@ -54,34 +56,76 @@ const TodoList = () => {
   const getNotificationInterval = (priority: number) => {
     switch (priority) {
       case 5:
-        return 15 * 60 * 1000 // 15 min
+        return 3 * 60 * 60 * 1000 // 180 min
       case 4:
-        return 30 * 60 * 1000 // 30 min
+        return 12 * 60 * 60 * 1000 // 12 hr
       case 3:
-        return 45 * 60 * 1000 // 30 min
+        return 24 * 60 * 60 * 1000 // 24 hr
       case 2:
-        return 60 * 60 * 1000 // 60 min
+        return 48 * 60 * 60 * 1000 // 48 hr
       default:
-        return 120 * 60 * 1000 // 120 min
+        return 96 * 60 * 60 * 1000 // 96 hr
     }
   }
 
   const scheduleNotifications = () => {
-    PushNotification.cancelAllLocalNotifications()
-    todos.forEach(todo => {
-      const interval = getNotificationInterval(todo.priority)
+    if (!scheduling) {
+      setScheduling(true)
+      console.log('Starting Schedule')
+      PushNotification.cancelAllLocalNotifications()
+
+      if (uncompletedTodos.length > 0) {
+        for (
+          let i = 0;
+          i < maxNotificationCount / uncompletedTodos.length;
+          i++
+        ) {
+          uncompletedTodos.forEach(todo => {
+            const interval = getNotificationInterval(todo.priority)
+            const notificationTime = new Date(Date.now() + interval * i)
+
+            console.log(
+              'Scheduling notification' +
+                i +
+                ' of ' +
+                todo.content +
+                todo.id +
+                ' for time:' +
+                notificationTime +
+                '(total:' +
+                i * uncompletedTodos.length +
+                ')',
+            )
+
+            PushNotification.localNotificationSchedule({
+              channelId: 'default-channel',
+              title: `Nicht vergessen!`,
+              message: todo.content,
+              date: notificationTime,
+              allowWhileIdle: true,
+              playSound: true,
+              soundName: 'default',
+              vibrate: true,
+            })
+          })
+        }
+      }
 
       PushNotification.localNotificationSchedule({
         channelId: 'default-channel',
-        title: `Nicht vergessen!`,
-        message: todo.content,
-        date: new Date(Date.now() + interval),
+        title: `Nutzt du die Remembrall noch?`,
+        message:
+          'Bitte öffne die App, wenn du auch weiterhin Benachrichtigungen erhalten möchtest.',
+        date: new Date(Date.now()),
         allowWhileIdle: true,
         playSound: true,
         soundName: 'default',
         vibrate: true,
       })
-    })
+
+      console.log('Finishing Schedule')
+      setScheduling(false)
+    }
   }
 
   const loadTodos = async () => {
@@ -107,7 +151,7 @@ const TodoList = () => {
     const newTodo: Todo = {
       id: Date.now(),
       content: 'Neues To-Do',
-      priority,
+      priority: 2,
       ticked: false,
     }
     const updatedTodos = [...todos, newTodo]
@@ -154,6 +198,8 @@ const TodoList = () => {
       todo.ticked === true &&
       todo.content.toLowerCase().includes(searchQuery.toLowerCase()),
   )
+
+  const uncompletedTodos = todos.filter(todo => todo.ticked === false)
 
   const updateTodoPriority = (id: number, priority: number) => {
     const updatedTodos = todos.map(todo =>
