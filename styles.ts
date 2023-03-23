@@ -9,7 +9,15 @@ export const lmc: {
   2: '#75F99A',
   1: '#D4FBDF',
 }
-export const dmc = ['#630A14', '#AD4300', '#DBB005', '#46955C', '#AAC9B2']
+export const dmc: {
+  [key: number]: string
+} = {
+  5: '#630A14',
+  4: '#AD4300',
+  3: '#DBB005',
+  2: '#46955C',
+  1: '#AAC9B2',
+}
 
 export const lightTheme = {
   container: {
@@ -59,7 +67,6 @@ export const lightTheme = {
   settingsText: {
     color: '#111',
   },
-  priorityPicker: {},
 }
 
 export const darkTheme = {
@@ -110,7 +117,6 @@ export const darkTheme = {
   settingsText: {
     color: '#ccc',
   },
-  priorityPicker: {},
 }
 
 export const styles = StyleSheet.create({
@@ -140,6 +146,7 @@ export const styles = StyleSheet.create({
   },
   todoText: {
     borderBottomWidth: 0,
+    fontSize: 16,
   },
   todoInput: {
     backgroundColor: '#eee',
@@ -233,5 +240,8 @@ export const styles = StyleSheet.create({
   },
   priorityPicker: {
     width: 180,
+  },
+  pickerItemStyle: {
+    fontSize: 5,
   },
 })

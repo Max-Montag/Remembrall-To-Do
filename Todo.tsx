@@ -1,7 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react'
 import {
   View,
-  Text,
   TouchableOpacity,
   TextInput,
   TouchableWithoutFeedback,
@@ -89,12 +88,14 @@ const Todo: React.FC<TodoProps> = ({
                 ]}
                 value={newContent}
                 onChangeText={handleChangeText}
+                multiline
               />
             </View>
             <Picker
               selectedValue={todo.priority}
               onValueChange={handlePriorityChange}
-              style={[styles.priorityPicker, theme.priorityPicker]}
+              style={[styles.priorityPicker]}
+              itemStyle={styles.pickerItemStyle}
               mode='dropdown'>
               <Picker.Item label='Extrem Hoch' value={5} />
               <Picker.Item label='Sehr Hoch' value={4} />
