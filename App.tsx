@@ -25,7 +25,6 @@ const App = () => {
       const colorMode = await AsyncStorage.getItem('colorMode')
 
       if (colorMode !== null) {
-        console.log(colorMode)
         setNavigationBarColor(colorMode === 'dark' ? true : false)
         setColorMode(colorMode as 'light' | 'dark')
       }
