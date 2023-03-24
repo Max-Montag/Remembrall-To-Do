@@ -8,9 +8,10 @@ import {
   ViewStyle,
 } from 'react-native'
 import {useNavigation, NavigationProp} from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import PushNotification from 'react-native-push-notification'
 import {createNotificationChannels} from './pushNotificationChannels'
+import {setNavigationBarColor} from './androidNavbarColor'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Todo from './Todo'
 import {lightTheme, darkTheme, styles} from './styles'
 import {useTheme} from './ThemeContext'
@@ -38,7 +39,7 @@ const TodoList = () => {
   const [todos, setTodos] = useState<Todo[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [scheduling, setScheduling] = useState(Boolean)
-  const {colorMode} = useTheme()
+  const {colorMode, setColorMode} = useTheme()
   const theme = colorMode === 'light' ? lightTheme : darkTheme
   const navigation = useNavigation<TodoListNavigationProp>()
   const [pickerValues, setPickerValues] = useState({
@@ -47,6 +48,23 @@ const TodoList = () => {
     picker3: 24,
     picker4: 48,
   })
+
+  const loadTheme = async () => {
+    try {
+      const colorMode = await AsyncStorage.getItem('colorMode')
+
+      if (colorMode !== null) {
+        setNavigationBarColor(colorMode === 'dark' ? true : false)
+        setColorMode(colorMode as 'light' | 'dark')
+      }
+    } catch (error) {
+      console.error('Error loading todos:', error)
+    }
+  }
+
+  useEffect(() => {
+    loadTheme()
+  }, [])
 
   useEffect(() => {
     loadTodos()

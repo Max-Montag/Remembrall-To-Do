@@ -57,5 +57,11 @@ npm install
 4. Start the development server:
 
 ```
-npm start
+npx react-native start
+```
+
+4. Start on Android:
+
+```
+ npx react-native run-android
 ```
