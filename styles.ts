@@ -90,6 +90,9 @@ export const lightTheme = {
   separatorText: {
     color: '#666',
   },
+  intervallPicker: {
+    color: '#222',
+  },
 }
 
 export const darkTheme = {
@@ -142,6 +145,9 @@ export const darkTheme = {
   },
   separatorText: {
     color: '#bbb',
+  },
+  intervallPicker: {
+    color: '#ccc',
   },
 }
 
@@ -255,7 +261,7 @@ export const styles = StyleSheet.create({
     fontSize: 20,
   },
   row: {
-    marginTop: 15,
+    marginTop: 25,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -273,11 +279,28 @@ export const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
+  settingsSeparator: {
+    borderTopColor: '#777',
+    borderTopWidth: 0.5,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 20,
+  },
   separatorTextWrapper: {
     alignItems: 'center',
   },
   separatorText: {
-    marginTop: 5,
+    marginTop: 10,
+    marginBottom: 10,
     fontSize: 17,
+  },
+  settingSeparatorText: {
+    marginTop: 10,
+    marginLeft: 10,
+    fontSize: 17,
+  },
+  intervallPicker: {
+    width: 170,
+    height: 50,
   },
 })

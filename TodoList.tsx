@@ -41,24 +41,36 @@ const TodoList = () => {
   const {colorMode} = useTheme()
   const theme = colorMode === 'light' ? lightTheme : darkTheme
   const navigation = useNavigation<TodoListNavigationProp>()
+  const [pickerValues, setPickerValues] = useState({
+    picker1: 3,
+    picker2: 12,
+    picker3: 24,
+    picker4: 48,
+  })
 
   useEffect(() => {
     loadTodos()
     createNotificationChannels()
+    ;(async () => {
+      const storedPickerValues = await AsyncStorage.getItem('pickerValues')
+      if (storedPickerValues) {
+        setPickerValues(JSON.parse(storedPickerValues))
+      }
+    })()
   }, [])
 
   const getNotificationInterval = (priority: number) => {
     switch (priority) {
       case 5:
-        return 3 * 60 * 60 * 1000 // 180 min
+        return pickerValues.picker1 * 60 * 60 * 1000
       case 4:
-        return 12 * 60 * 60 * 1000 // 12 hr
+        return pickerValues.picker2 * 60 * 60 * 1000
       case 3:
-        return 24 * 60 * 60 * 1000 // 24 hr
+        return pickerValues.picker3 * 60 * 60 * 1000
       case 2:
-        return 48 * 60 * 60 * 1000 // 48 hr
+        return pickerValues.picker4 * 60 * 60 * 1000
       default:
-        return 96 * 60 * 60 * 1000 // 96 hr
+        return 96 * 60 * 60 * 1000
     }
   }
 
@@ -186,7 +198,7 @@ const TodoList = () => {
           style={[styles.searchInput, theme.searchInput]}
           value={searchQuery}
           onChangeText={handleSearchChange}
-          placeholder='Search todos'
+          placeholder='Suchen'
           placeholderTextColor={theme.placeholder.color}
         />
         <TouchableOpacity
