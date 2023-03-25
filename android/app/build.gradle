@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.awesomenotes"
+    namespace "com.remembrall"
     defaultConfig {
-        applicationId "com.awesomenotes"
+        applicationId "com.remembrall"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

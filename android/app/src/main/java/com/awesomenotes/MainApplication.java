@@ -1,4 +1,4 @@
-package com.awesomenotes;
+package com.remembrall;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
