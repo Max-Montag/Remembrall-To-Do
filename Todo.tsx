@@ -109,6 +109,7 @@ const Todo: React.FC<TodoProps> = ({
                 value={newContent}
                 onChangeText={handleChangeText}
                 multiline
+                autoFocus={isEditing}
               />
             </View>
             <Picker

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {
   Text,
   View,
@@ -14,6 +14,7 @@ import {setNavigationBarColor} from './androidNavbarColor'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Todo from './Todo'
 import {lightTheme, darkTheme, styles} from './styles'
+import {EditModeContext} from './EditModeContext'
 import {useTheme} from './ThemeContext'
 import Screwdriver from './img/icons/Screwdriver'
 import JournalPlus from './img/icons/JournalPlus'
@@ -39,6 +40,7 @@ const TodoList = () => {
   const [todos, setTodos] = useState<Todo[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [scheduling, setScheduling] = useState(Boolean)
+  const {editingTodoId, setEditingTodoId} = useContext(EditModeContext)
   const {colorMode, setColorMode} = useTheme()
   const theme = colorMode === 'light' ? lightTheme : darkTheme
   const navigation = useNavigation<TodoListNavigationProp>()
@@ -149,14 +151,15 @@ const TodoList = () => {
   const addTodo = () => {
     const newTodo: Todo = {
       id: Date.now(),
-      content: 'Neues To-Do',
+      content: '',
       priority: 2,
       ticked: false,
     }
-    const updatedTodos = [...todos, newTodo]
+    const updatedTodos = [newTodo, ...todos]
     setTodos(updatedTodos)
     saveTodos(updatedTodos)
     scheduleNotifications()
+    setEditingTodoId(newTodo.id)
   }
 
   const updateTodo = (id: number, content: string) => {
@@ -182,13 +185,13 @@ const TodoList = () => {
     )
     setTodos(updatedTodos)
     saveTodos(updatedTodos)
+    scheduleNotifications()
   }
 
   const deleteTodo = (id: number) => {
     const updatedTodos = todos.filter(todo => todo.id !== id)
     setTodos(updatedTodos)
     saveTodos(updatedTodos)
-    scheduleNotifications()
   }
 
   const handleSearchChange = (text: string) => {
