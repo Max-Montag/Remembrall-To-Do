@@ -48,10 +48,10 @@ const Todo: React.FC<TodoProps> = ({
   const isEditing = editingTodoId === todo.id
 
   useEffect(() => {
-    if (editingTodoId !== todo.id && newContent !== todo.content) {
+    if (newContent !== todo.content) {
       onUpdate(todo.id, newContent)
     }
-  }, [editingTodoId, newContent])
+  }, [editingTodoId, newContent, todo.content])
 
   const handleEdit = () => {
     if (!isEditing) {
